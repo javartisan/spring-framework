@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-//        maven { url "https://repo.spring.io/plugins-release" }
+//        maven { url "http://repo.spring.io/plugins-release" }
         maven { url "http://repo.springsource.org/plugins-release" }
     }
     dependencies {
@@ -18,10 +18,10 @@ plugins {
 }
 
 ext {
-    linkHomepage = "https://projects.spring.io/spring-framework"
-    linkCi = "https://build.spring.io/browse/SPR"
-    linkIssue = "https://jira.spring.io/browse/SPR"
-    linkScmUrl = "https://github.com/spring-projects/spring-framework"
+    linkHomepage = "http://projects.spring.io/spring-framework"
+    linkCi = "http://build.spring.io/browse/SPR"
+    linkIssue = "http://jira.spring.io/browse/SPR"
+    linkScmUrl = "http://github.com/spring-projects/spring-framework"
     linkScmConnection = "scm:git:git://github.com/spring-projects/spring-framework.git"
     linkScmDevConnection = "scm:git:ssh://git@github.com:spring-projects/spring-framework.git"
 
@@ -148,7 +148,7 @@ configure(allprojects) { project ->
     }
 
     repositories {
-//        maven { url "https://repo.spring.io/libs-release" }
+//        maven { url "http://repo.spring.io/libs-release" }
         maven { url "http://repo.springsource.org/plugins-release" }
 
     }
