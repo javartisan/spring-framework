@@ -52,7 +52,7 @@ import org.springframework.util.Assert;
  * @see ChildBeanDefinition
  */
 @SuppressWarnings("serial")
-public class RootBeanDefinition extends AbstractBeanDefinition {
+public class   RootBeanDefinition extends AbstractBeanDefinition {
 
 	@Nullable
 	private BeanDefinitionHolder decoratedDefinition;
