@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * {@link PropertySource} that reads keys and values from a {@code Map} object.
- *
+ *  该类是对属性的一个逻辑封装，name是一类属性的名字，下面有多个该类别的属性。例如name =系统属性，value则是系统的一堆K，v对
  * @author Chris Beams
  * @author Juergen Hoeller
  * @since 3.1

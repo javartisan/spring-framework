@@ -190,6 +190,9 @@ public abstract class PropertySource<T> {
 
 
 	/**
+	 *
+	 * 就是一个占位符属性没有被替换之前的一种表示形式
+	 *
 	 * {@code PropertySource} to be used as a placeholder in cases where an actual
 	 * property source cannot be eagerly initialized at application context
 	 * creation time.  For example, a {@code ServletContext}-based property source
@@ -204,6 +207,7 @@ public abstract class PropertySource<T> {
 	public static class StubPropertySource extends PropertySource<Object> {
 
 		public StubPropertySource(String name) {
+			//value 就是一个Object实例
 			super(name, new Object());
 		}
 
