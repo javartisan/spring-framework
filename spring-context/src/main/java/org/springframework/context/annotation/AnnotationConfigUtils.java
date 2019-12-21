@@ -145,6 +145,9 @@ public abstract class AnnotationConfigUtils {
 	}
 
 	/**
+	 *
+	 * 注册注解处理器的方法
+	 *
 	 * Register all relevant annotation post processors in the given registry.
 	 *
 	 * @param registry the registry to operate on

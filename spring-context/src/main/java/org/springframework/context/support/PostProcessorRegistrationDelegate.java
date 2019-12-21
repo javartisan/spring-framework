@@ -228,6 +228,7 @@ final class PostProcessorRegistrationDelegate {
 				priorityOrderedPostProcessors.add(pp);
 				if (pp instanceof MergedBeanDefinitionPostProcessor) {
 					//NOTES: MergedBeanDefinitionPostProcessor是internal类型的BeanPostProcessor
+					//例如：AutowiredAnnotationBeanPostProcessor与CommonAnnotationBeanPostProcessor都是MergedBeanDefinitionPostProcessor的子类
 					internalPostProcessors.add(pp);
 				}
 			} else if (beanFactory.isTypeMatch(ppName, Ordered.class)) {
