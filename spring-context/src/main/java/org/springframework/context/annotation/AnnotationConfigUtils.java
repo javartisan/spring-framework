@@ -39,6 +39,10 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.ClassUtils;
 
 /**
+ * <b>AnnotationConfigUtils是一个基础的工具类，负责注册 有关于注解的配置定义的解析相关的处理器，主要包含两类：BeanPostProcessor与BeanFactoryPostProcessor<b/>
+ * <p>
+ * <p>
+ * <p>
  * Utility class that allows for convenient registration of common
  * {@link org.springframework.beans.factory.config.BeanPostProcessor} and
  * {@link org.springframework.beans.factory.config.BeanFactoryPostProcessor}
