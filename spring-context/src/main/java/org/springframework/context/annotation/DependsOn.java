@@ -23,6 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 设置当前Bean创建之前需要依赖的Bean，被依赖的Bean在此Bean创建之前都会被创建好
+ *
  * Beans on which the current bean depends. Any beans specified are guaranteed to be
  * created by the container before this bean. Used infrequently in cases where a bean
  * does not explicitly depend on another through properties or constructor arguments,
