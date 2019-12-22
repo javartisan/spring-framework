@@ -555,7 +555,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Spring最核心的方法
+	 * Spring最核心的方法,容器启动的整个过程都在这个方法里面
 	 *
 	 * @throws BeansException
 	 * @throws IllegalStateException
