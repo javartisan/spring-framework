@@ -582,22 +582,27 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
-				//处理BeanPostProcessor
+				//添加BeanPostProcessor定义到Spring容器中
 				registerBeanPostProcessors(beanFactory);
 
 				// Initialize message source for this context.
+				//主要用于消息的国际化支持。
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
+				//初始化关于事件处理逻辑，将ApplicationEventMulticaster存储到Spring容器中
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// 初始化其他的特定Bean到容器中，例如Web容器会处理系统主题类，主要是解决不同主题不同配置信息，例如：CSS以及图片等等
 				onRefresh();
 
 				// Check for listener beans and register them.
+				//将Listener添加到ApplicationEventMulticaster中
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons.
+				//
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
@@ -778,7 +783,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 初始化MessageSource，主要用于消息的参数化以及国际化支持。
+	 * <p>
 	 * Initialize the MessageSource.
+	 * <p>
 	 * Use parent's if none defined in this context.
 	 */
 	protected void initMessageSource() {
@@ -810,6 +818,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 初始化关于事件处理逻辑，将ApplicationEventMulticaster存储到Spring容器中
+	 * <p>
+	 * ApplicationEventMulticaster是ApplicationEvent的广播器，主要用于管理ApplicationListener并分发事件
 	 * Initialize the ApplicationEventMulticaster.
 	 * Uses SimpleApplicationEventMulticaster if none defined in the context.
 	 *
