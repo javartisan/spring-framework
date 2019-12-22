@@ -848,6 +848,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		return (this.configurationFrozen || super.isBeanEligibleForMetadataCaching(beanName));
 	}
 
+	/**
+	 * 实例化非延迟加载的单例类
+	 *
+	 * @throws BeansException
+	 */
 	@Override
 	public void preInstantiateSingletons() throws BeansException {
 		if (logger.isTraceEnabled()) {
@@ -862,8 +867,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		for (String beanName : beanNames) {
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+				//不是抽象类而且是单例并且非延迟加载
 				if (isFactoryBean(beanName)) {
+					//是FactoryBean，需要在BeanName前面追加&前缀
+
+					//
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
+
 					if (bean instanceof FactoryBean) {
 						final FactoryBean<?> factory = (FactoryBean<?>) bean;
 						boolean isEagerInit;
@@ -872,8 +882,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 											((SmartFactoryBean<?>) factory)::isEagerInit,
 									getAccessControlContext());
 						} else {
-							isEagerInit = (factory instanceof SmartFactoryBean &&
-									((SmartFactoryBean<?>) factory).isEagerInit());
+							isEagerInit = (factory instanceof SmartFactoryBean &&((SmartFactoryBean<?>) factory).isEagerInit());
 						}
 						if (isEagerInit) {
 							getBean(beanName);
