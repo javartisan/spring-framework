@@ -22,6 +22,8 @@ import org.springframework.aop.TargetSource;
 import org.springframework.util.Assert;
 
 /**
+ * 支持热交换的TargetSource ：org.springframework.aop.target.HotSwappableTargetSource#swap(java.lang.Object)
+ *
  * {@link org.springframework.aop.TargetSource} implementation that
  * caches a local target object, but allows the target to be swapped
  * while the application is running.
@@ -81,6 +83,7 @@ public class HotSwappableTargetSource implements TargetSource, Serializable {
 
 
 	/**
+	 * 支持热交换的TargetSource
 	 * Swap the target, returning the old target object.
 	 * @param newTarget the new target object
 	 * @return the old target object

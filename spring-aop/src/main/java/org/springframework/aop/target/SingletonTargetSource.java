@@ -60,6 +60,10 @@ public class SingletonTargetSource implements TargetSource, Serializable {
 		return this.target.getClass();
 	}
 
+	/**
+	 * 当代理类调用方法时候会调用此方法获取真实对象
+	 * @return
+	 */
 	@Override
 	public Object getTarget() {
 		return this.target;
