@@ -34,6 +34,11 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.ReflectionUtils;
 
 /**
+ * 通用类型转换器，调用如下方法：
+ * public Object convert(@Nullable Object source, TypeDescriptor sourceType, TypeDescriptor targetType)进行类型转换。
+ * <p>
+ * TypeDescriptor是Spring内部封装的一个类型表示类。
+ * <p>
  * Generic converter that uses conventions to convert a source object to a
  * {@code targetType} by delegating to a method on the source object or to
  * a static factory method or constructor on the {@code targetType}.
@@ -60,8 +65,8 @@ import org.springframework.util.ReflectionUtils;
  * @author Keith Donald
  * @author Juergen Hoeller
  * @author Sam Brannen
- * @since 3.0
  * @see FallbackObjectToStringConverter
+ * @since 3.0
  */
 final class ObjectToObjectConverter implements ConditionalGenericConverter {
 
@@ -97,21 +102,17 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 				ReflectionUtils.makeAccessible(method);
 				if (!Modifier.isStatic(method.getModifiers())) {
 					return method.invoke(source);
-				}
-				else {
+				} else {
 					return method.invoke(null, source);
 				}
-			}
-			else if (member instanceof Constructor) {
+			} else if (member instanceof Constructor) {
 				Constructor<?> ctor = (Constructor<?>) member;
 				ReflectionUtils.makeAccessible(ctor);
 				return ctor.newInstance(source);
 			}
-		}
-		catch (InvocationTargetException ex) {
+		} catch (InvocationTargetException ex) {
 			throw new ConversionFailedException(sourceType, targetType, source, ex.getTargetException());
-		}
-		catch (Throwable ex) {
+		} catch (Throwable ex) {
 			throw new ConversionFailedException(sourceType, targetType, source, ex);
 		}
 
@@ -119,10 +120,9 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 		// No toInteger() method exists on java.lang.Number, and no static valueOf/of/from(java.lang.Number)
 		// method or Integer(java.lang.Number) constructor exists on java.lang.Integer.
 		throw new IllegalStateException(String.format("No to%3$s() method exists on %1$s, " +
-				"and no static valueOf/of/from(%1$s) method or %3$s(%1$s) constructor exists on %2$s.",
+						"and no static valueOf/of/from(%1$s) method or %3$s(%1$s) constructor exists on %2$s.",
 				sourceClass.getName(), targetClass.getName(), targetClass.getSimpleName()));
 	}
-
 
 
 	static boolean hasConversionMethodOrConstructor(Class<?> targetClass, Class<?> sourceClass) {
@@ -157,12 +157,10 @@ final class ObjectToObjectConverter implements ConditionalGenericConverter {
 			return (!Modifier.isStatic(method.getModifiers()) ?
 					ClassUtils.isAssignable(method.getDeclaringClass(), sourceClass) :
 					method.getParameterTypes()[0] == sourceClass);
-		}
-		else if (member instanceof Constructor) {
+		} else if (member instanceof Constructor) {
 			Constructor<?> ctor = (Constructor<?>) member;
 			return (ctor.getParameterTypes()[0] == sourceClass);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

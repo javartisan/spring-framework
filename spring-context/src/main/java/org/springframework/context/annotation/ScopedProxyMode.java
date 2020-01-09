@@ -24,8 +24,8 @@ package org.springframework.context.annotation;
  * dependencies</em>'.
  *
  * @author Mark Fisher
- * @since 2.5
  * @see ScopeMetadata
+ * @since 2.5
  */
 public enum ScopedProxyMode {
 
@@ -45,12 +45,14 @@ public enum ScopedProxyMode {
 	NO,
 
 	/**
+	 * JDK代理
 	 * Create a JDK dynamic proxy implementing <i>all</i> interfaces exposed by
 	 * the class of the target object.
 	 */
 	INTERFACES,
 
 	/**
+	 * CGLIB代理
 	 * Create a class-based proxy (uses CGLIB).
 	 */
 	TARGET_CLASS;

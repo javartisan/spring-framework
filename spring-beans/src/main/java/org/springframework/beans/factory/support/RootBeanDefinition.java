@@ -52,7 +52,7 @@ import org.springframework.util.Assert;
  * @see ChildBeanDefinition
  */
 @SuppressWarnings("serial")
-public class RootBeanDefinition extends AbstractBeanDefinition {
+public class   RootBeanDefinition extends AbstractBeanDefinition {
 
 	@Nullable
 	private BeanDefinitionHolder decoratedDefinition;
@@ -107,6 +107,9 @@ public class RootBeanDefinition extends AbstractBeanDefinition {
 	@Nullable
 	volatile Boolean beforeInstantiationResolved;
 
+	/**
+	 * Bean的字段
+	 */
 	@Nullable
 	private Set<Member> externallyManagedConfigMembers;
 

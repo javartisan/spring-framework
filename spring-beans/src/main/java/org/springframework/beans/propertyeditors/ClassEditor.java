@@ -23,6 +23,9 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 完成字符串类名与Class之间的转换 ，其父类是JDK中的标准接口PropertyEditor
+ * <p>
+ * <p>
  * Property editor for {@link Class java.lang.Class}, to enable the direct
  * population of a {@code Class} property without recourse to having to use a
  * String class name property as bridge.
@@ -32,9 +35,9 @@ import org.springframework.util.StringUtils;
  *
  * @author Juergen Hoeller
  * @author Rick Evans
- * @since 13.05.2003
  * @see Class#forName
  * @see org.springframework.util.ClassUtils#forName(String, ClassLoader)
+ * @since 13.05.2003
  */
 public class ClassEditor extends PropertyEditorSupport {
 
@@ -51,8 +54,9 @@ public class ClassEditor extends PropertyEditorSupport {
 
 	/**
 	 * Create a default ClassEditor, using the given ClassLoader.
+	 *
 	 * @param classLoader the ClassLoader to use
-	 * (or {@code null} for the thread context ClassLoader)
+	 *                    (or {@code null} for the thread context ClassLoader)
 	 */
 	public ClassEditor(@Nullable ClassLoader classLoader) {
 		this.classLoader = (classLoader != null ? classLoader : ClassUtils.getDefaultClassLoader());
@@ -63,8 +67,7 @@ public class ClassEditor extends PropertyEditorSupport {
 	public void setAsText(String text) throws IllegalArgumentException {
 		if (StringUtils.hasText(text)) {
 			setValue(ClassUtils.resolveClassName(text.trim(), this.classLoader));
-		}
-		else {
+		} else {
 			setValue(null);
 		}
 	}
@@ -74,8 +77,7 @@ public class ClassEditor extends PropertyEditorSupport {
 		Class<?> clazz = (Class<?>) getValue();
 		if (clazz != null) {
 			return ClassUtils.getQualifiedName(clazz);
-		}
-		else {
+		} else {
 			return "";
 		}
 	}

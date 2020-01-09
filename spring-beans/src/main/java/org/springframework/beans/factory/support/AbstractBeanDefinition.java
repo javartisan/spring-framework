@@ -464,6 +464,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
+	 *
 	 * Return whether this a <b>Singleton</b>, with a single shared instance
 	 * returned from all calls.
 	 * @see #SCOPE_SINGLETON

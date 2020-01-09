@@ -19,7 +19,12 @@ package org.springframework.util;
 import org.springframework.lang.Nullable;
 
 /**
+ *
+ * 这是一个基础接口用于解析String值
+ *
  * Simple strategy interface for resolving a String value.
+ *
+ *
  * Used by {@link org.springframework.beans.factory.config.ConfigurableBeanFactory}.
  *
  * @author Juergen Hoeller

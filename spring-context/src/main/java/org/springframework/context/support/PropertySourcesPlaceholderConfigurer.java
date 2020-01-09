@@ -36,6 +36,18 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringValueResolver;
 
 /**
+ * PropertySourcesPlaceholderConfigurer是Spring3.1之后的实现。
+ * Spring3.1应该优先使用PropertySourcesPlaceholderConfigurer，PropertySourcesPlaceholderConfigurer支持Environment与PropertySource的优势，更灵活。
+ * <p>
+ *
+ * <b>本质区别：<b/>
+ * PropertyResourceConfigurer#postProcessBeanFactory方法在PropertyPlaceholderConfigurer与PropertySourcesPlaceholderConfigurer是完全不同的实现逻辑
+ * <ul>
+ * <li>1：PropertyPlaceholderConfigurer是使用的父类的postProcessBeanFactory方法的逻辑
+ * <li>2：PropertySourcesPlaceholderConfigurer子类从新实现，加入了PropertySource、Environment以及Properties的支持。
+ * </ul>
+ *
+ * <p>
  * Specialization of {@link PlaceholderConfigurerSupport} that resolves ${...} placeholders
  * within bean definition property values and {@code @Value} annotations against the current
  * Spring {@link Environment} and its set of {@link PropertySources}.
@@ -57,10 +69,10 @@ import org.springframework.util.StringValueResolver;
  *
  * @author Chris Beams
  * @author Juergen Hoeller
- * @since 3.1
  * @see org.springframework.core.env.ConfigurableEnvironment
  * @see org.springframework.beans.factory.config.PlaceholderConfigurerSupport
  * @see org.springframework.beans.factory.config.PropertyPlaceholderConfigurer
+ * @since 3.1
  */
 public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerSupport implements EnvironmentAware {
 
@@ -91,6 +103,7 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	 * Customize the set of {@link PropertySources} to be used by this configurer.
 	 * <p>Setting this property indicates that environment property sources and
 	 * local properties should be ignored.
+	 *
 	 * @see #postProcessBeanFactory
 	 */
 	public void setPropertySources(PropertySources propertySources) {
@@ -100,6 +113,7 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	/**
 	 * {@code PropertySources} from the given {@link Environment}
 	 * will be searched when replacing ${...} placeholders.
+	 *
 	 * @see #setPropertySources
 	 * @see #postProcessBeanFactory
 	 */
@@ -130,13 +144,13 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 			this.propertySources = new MutablePropertySources();
 			if (this.environment != null) {
 				this.propertySources.addLast(
-					new PropertySource<Environment>(ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME, this.environment) {
-						@Override
-						@Nullable
-						public String getProperty(String key) {
-							return this.source.getProperty(key);
+						new PropertySource<Environment>(ENVIRONMENT_PROPERTIES_PROPERTY_SOURCE_NAME, this.environment) {
+							@Override
+							@Nullable
+							public String getProperty(String key) {
+								return this.source.getProperty(key);
+							}
 						}
-					}
 				);
 			}
 			try {
@@ -144,12 +158,10 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 						new PropertiesPropertySource(LOCAL_PROPERTIES_PROPERTY_SOURCE_NAME, mergeProperties());
 				if (this.localOverride) {
 					this.propertySources.addFirst(localPropertySource);
-				}
-				else {
+				} else {
 					this.propertySources.addLast(localPropertySource);
 				}
-			}
-			catch (IOException ex) {
+			} catch (IOException ex) {
 				throw new BeanInitializationException("Could not load properties", ex);
 			}
 		}
@@ -163,7 +175,7 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	 * placeholders with values from the given properties.
 	 */
 	protected void processProperties(ConfigurableListableBeanFactory beanFactoryToProcess,
-			final ConfigurablePropertyResolver propertyResolver) throws BeansException {
+									 final ConfigurablePropertyResolver propertyResolver) throws BeansException {
 
 		propertyResolver.setPlaceholderPrefix(this.placeholderPrefix);
 		propertyResolver.setPlaceholderSuffix(this.placeholderSuffix);
@@ -185,9 +197,10 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	/**
 	 * Implemented for compatibility with
 	 * {@link org.springframework.beans.factory.config.PlaceholderConfigurerSupport}.
+	 *
+	 * @throws UnsupportedOperationException in this implementation
 	 * @deprecated in favor of
 	 * {@link #processProperties(ConfigurableListableBeanFactory, ConfigurablePropertyResolver)}
-	 * @throws UnsupportedOperationException in this implementation
 	 */
 	@Override
 	@Deprecated
@@ -199,6 +212,7 @@ public class PropertySourcesPlaceholderConfigurer extends PlaceholderConfigurerS
 	/**
 	 * Return the property sources that were actually applied during
 	 * {@link #postProcessBeanFactory(ConfigurableListableBeanFactory) post-processing}.
+	 *
 	 * @return the property sources that were applied
 	 * @throws IllegalStateException if the property sources have not yet been applied
 	 * @since 4.0
