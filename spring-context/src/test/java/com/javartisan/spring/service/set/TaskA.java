@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaskA {
 
-	private B b;
+	private TaskB b;
+
 	@Autowired
-	public void setB(B b) {
+	public void setB(TaskB b) {
 		this.b = b;
 	}
 }

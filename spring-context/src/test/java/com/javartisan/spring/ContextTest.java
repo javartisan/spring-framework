@@ -28,12 +28,11 @@ public class ContextTest {
 	public void cycleFieldDependency() {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		A a = context.getBean(A.class);
-		B b = context.getBean(B.class);
-		C c = context.getBean(C.class);
+		TaskA a = context.getBean(TaskA.class);
+		TaskB b = context.getBean(TaskB.class);
+		TaskC c = context.getBean(TaskC.class);
 		System.out.println(a);
 	}
-
 
 
 	// 循环
@@ -41,10 +40,10 @@ public class ContextTest {
 	public void cycleConstuctorDependency() {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		CA a = context.getBean(CA.class);
-		CB b = context.getBean(CB.class);
-		CC c = context.getBean(CC.class);
-		System.out.println(a);
+		CA taskA = context.getBean(CA.class);
+		CB taskB = context.getBean(CB.class);
+		CC taskC = context.getBean(CC.class);
+		System.out.println(taskA);
 	}
 
 
