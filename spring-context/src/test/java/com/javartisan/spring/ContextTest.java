@@ -28,10 +28,10 @@ public class ContextTest {
 	public void cycleFieldDependency() {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		TaskA a = context.getBean(TaskA.class);
-		TaskB b = context.getBean(TaskB.class);
-		TaskC c = context.getBean(TaskC.class);
-		System.out.println(a);
+		TaskA taskA = context.getBean(TaskA.class);
+		TaskB taskB = context.getBean(TaskB.class);
+		TaskC taskC = context.getBean(TaskC.class);
+		System.out.println(taskA);
 	}
 
 
