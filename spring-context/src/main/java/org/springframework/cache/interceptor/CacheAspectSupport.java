@@ -365,6 +365,8 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 	}
 
 	/**
+	 * 执行底层方法获取缓存数值
+	 * <p>
 	 * Execute the underlying operation (typically in case of cache miss) and return
 	 * the result of the invocation. If an exception occurs it will be wrapped in
 	 * a {@link CacheOperationInvoker.ThrowableWrapper}: the exception can be handled
@@ -395,7 +397,9 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 	private Object execute(final CacheOperationInvoker invoker, Method method, CacheOperationContexts contexts) {
 		// Special handling of synchronized invocation
 		if (contexts.isSynchronized()) {
+			//TODO 此处需要debug下，没看明白
 			CacheOperationContext context = contexts.get(CacheableOperation.class).iterator().next();
+
 			if (isConditionPassing(context, CacheOperationExpressionEvaluator.NO_RESULT)) {
 				Object key = generateKey(context, CacheOperationExpressionEvaluator.NO_RESULT);
 				Cache cache = context.getCaches().iterator().next();
@@ -433,6 +437,7 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 
 		if (cacheHit != null && !hasCachePut(contexts)) {
 			// If there are no put requests, just use the cache hit
+			// 命中缓存，获取缓存结果之后更新过期时间
 			cacheValue = cacheHit.get();
 			returnValue = wrapCacheValue(method, cacheValue);
 		} else {
@@ -616,6 +621,9 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 
 		private final MultiValueMap<Class<? extends CacheOperation>, CacheOperationContext> contexts;
 
+		/**
+		 * 表示当前缓存是否开启了多线程下同步
+		 */
 		private final boolean sync;
 
 		public CacheOperationContexts(Collection<? extends CacheOperation> operations, Method method,
@@ -633,10 +641,19 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 			return (result != null ? result : Collections.emptyList());
 		}
 
+		/**
+		 * 表示当前缓存是否开启了多线程下同步
+		 */
 		public boolean isSynchronized() {
 			return this.sync;
 		}
 
+		/**
+		 * 检测当前缓存是否是开启了多线程下的缓存同步
+		 *
+		 * @param method
+		 * @return
+		 */
 		private boolean determineSyncFlag(Method method) {
 			List<CacheOperationContext> cacheOperationContexts = this.contexts.get(CacheableOperation.class);
 			if (cacheOperationContexts == null) {  // no @Cacheable operation at all
@@ -767,6 +784,11 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 			return combinedArgs;
 		}
 
+		/**
+		 * Cacheable中的condition字段，判断是否满足缓存条件
+		 * @param result
+		 * @return
+		 */
 		protected boolean isConditionPassing(@Nullable Object result) {
 			if (this.conditionPassing == null) {
 				if (StringUtils.hasText(this.metadata.operation.getCondition())) {

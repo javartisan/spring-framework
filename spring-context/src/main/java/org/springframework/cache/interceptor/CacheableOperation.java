@@ -31,11 +31,15 @@ public class CacheableOperation extends CacheOperation {
 	@Nullable
 	private final String unless;
 
+	/**
+	 * 是否是同步缓存
+	 */
 	private final boolean sync;
 
 
 	/**
 	 * Create a new {@link CacheableOperation} instance from the given builder.
+	 *
 	 * @since 4.3
 	 */
 	public CacheableOperation(CacheableOperation.Builder b) {
@@ -50,6 +54,10 @@ public class CacheableOperation extends CacheOperation {
 		return this.unless;
 	}
 
+	/**
+	 * 是否是同步缓存
+	 * @return
+	 */
 	public boolean isSync() {
 		return this.sync;
 	}
@@ -57,13 +65,16 @@ public class CacheableOperation extends CacheOperation {
 
 	/**
 	 * A builder that can be used to create a {@link CacheableOperation}.
+	 *
 	 * @since 4.3
 	 */
 	public static class Builder extends CacheOperation.Builder {
 
 		@Nullable
 		private String unless;
-
+		/**
+		 * 标识多线程环境下是否进行同步
+		 */
 		private boolean sync;
 
 		public void setUnless(String unless) {
