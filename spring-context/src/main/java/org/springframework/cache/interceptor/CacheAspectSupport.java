@@ -448,6 +448,7 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		}
 
 		// Collect any explicit @CachePuts
+		//处理CachePuts注解逻辑
 		//生成CachePutRequest对象集合
 		collectPutRequests(contexts.get(CachePutOperation.class), cacheValue, cachePutRequests);
 
@@ -518,17 +519,25 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		for (Cache cache : context.getCaches()) {
 			if (operation.isCacheWide()) {
 				logInvalidating(context, operation, null);
+				//清空缓存
 				doClear(cache);
 			} else {
 				if (key == null) {
 					key = generateKey(context, result);
 				}
 				logInvalidating(context, operation, key);
+				// key的缓存失效
 				doEvict(cache, key);
 			}
 		}
 	}
 
+	/**
+	 * 试缓存失效操作的日志记录方法
+	 * @param context
+	 * @param operation
+	 * @param key
+	 */
 	private void logInvalidating(CacheOperationContext context, CacheEvictOperation operation, @Nullable Object key) {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Invalidating " + (key != null ? "cache key [" + key + "]" : "entire cache") +
@@ -786,6 +795,7 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 
 		/**
 		 * Cacheable中的condition字段，判断是否满足缓存条件
+		 *
 		 * @param result
 		 * @return
 		 */
@@ -802,6 +812,12 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 			return this.conditionPassing;
 		}
 
+		/**
+		 * 评估Cacheable中的unless字段条件，是否负责更新缓存逻辑
+		 *
+		 * @param value
+		 * @return
+		 */
 		protected boolean canPutToCache(@Nullable Object value) {
 			String unless = "";
 			if (this.metadata.operation instanceof CacheableOperation) {
