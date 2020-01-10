@@ -61,6 +61,7 @@ import org.springframework.core.annotation.AliasFor;
 public @interface Cacheable {
 
 	/**
+	 * 缓存名字
 	 * Alias for {@link #cacheNames}.
 	 */
 	@AliasFor("cacheNames")
@@ -107,6 +108,8 @@ public @interface Cacheable {
 	String keyGenerator() default "";
 
 	/**
+	 * 缓存管理器
+	 * <p>
 	 * The bean name of the custom {@link org.springframework.cache.CacheManager} to use to
 	 * create a default {@link org.springframework.cache.interceptor.CacheResolver} if none
 	 * is set already.
@@ -126,9 +129,8 @@ public @interface Cacheable {
 	String cacheResolver() default "";
 
 	/**
-	 *
-	 *是一个spEL的表达式，可以设置方法调用表达式，根据返回结果是否进行缓存
-	 *
+	 * 是一个spEL的表达式，可以设置方法调用表达式，根据返回结果是否进行缓存
+	 * <p>
 	 * Spring Expression Language (SpEL) expression used for making the method
 	 * caching conditional.
 	 * <p>Default is {@code ""}, meaning the method result is always cached.
