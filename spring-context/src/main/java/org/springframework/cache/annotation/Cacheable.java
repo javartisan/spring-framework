@@ -27,6 +27,9 @@ import java.util.concurrent.Callable;
 import org.springframework.core.annotation.AliasFor;
 
 /**
+ *
+ * Spring缓存注解
+ *
  * Annotation indicating that the result of invoking a method (or all methods
  * in a class) can be cached.
  *
