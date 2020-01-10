@@ -333,6 +333,14 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		this.evaluator.clear();
 	}
 
+	/**
+	 * 获取缓存
+	 * @param invoker
+	 * @param target
+	 * @param method
+	 * @param args
+	 * @return
+	 */
 	@Nullable
 	protected Object execute(CacheOperationInvoker invoker, Object target, Method method, Object[] args) {
 		// Check whether aspect is enabled (to cope with cases where the AJ is pulled in automatically)
@@ -369,6 +377,13 @@ public abstract class CacheAspectSupport extends AbstractCacheInvoker
 		return AopProxyUtils.ultimateTargetClass(target);
 	}
 
+	/**
+	 * 获取缓存的方法
+	 * @param invoker
+	 * @param method
+	 * @param contexts
+	 * @return
+	 */
 	@Nullable
 	private Object execute(final CacheOperationInvoker invoker, Method method, CacheOperationContexts contexts) {
 		// Special handling of synchronized invocation

@@ -25,6 +25,8 @@ import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.cache.CacheManager;
 
 /**
+ * 缓存的FactoryBean
+ *
  * Proxy factory bean for simplified declarative caching handling.
  * This is a convenient alternative to a standard AOP
  * {@link org.springframework.aop.framework.ProxyFactoryBean}

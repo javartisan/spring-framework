@@ -47,20 +47,19 @@ public class CacheInterceptor extends CacheAspectSupport implements MethodInterc
 	@Nullable
 	public Object invoke(final MethodInvocation invocation) throws Throwable {
 		Method method = invocation.getMethod();
-
+		// 1: 获取缓存获取Invoker
 		CacheOperationInvoker aopAllianceInvoker = () -> {
 			try {
 				return invocation.proceed();
-			}
-			catch (Throwable ex) {
+			} catch (Throwable ex) {
 				throw new CacheOperationInvoker.ThrowableWrapper(ex);
 			}
 		};
 
 		try {
+			//2:通过Invoker获取缓存
 			return execute(aopAllianceInvoker, invocation.getThis(), method, invocation.getArguments());
-		}
-		catch (CacheOperationInvoker.ThrowableWrapper th) {
+		} catch (CacheOperationInvoker.ThrowableWrapper th) {
 			throw th.getOriginal();
 		}
 	}
