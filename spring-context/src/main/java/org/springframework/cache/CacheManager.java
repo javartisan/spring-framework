@@ -18,9 +18,12 @@ package org.springframework.cache;
 
 import java.util.Collection;
 
+import org.springframework.cache.interceptor.CacheResolver;
 import org.springframework.lang.Nullable;
 
 /**
+ * CacheManager是对{@link Cache}对象的管理类 , CacheManager主要服务于{@link CacheResolver}类。
+ *
  * Spring's central cache manager SPI.
  * Allows for retrieving named {@link Cache} regions.
  *

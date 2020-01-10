@@ -21,6 +21,9 @@ import java.util.Collection;
 import org.springframework.cache.Cache;
 
 /**
+ * 检索Cache的解析器，Cache是Spring cache中的一个逻辑抽象，例如：Redis中逻辑的分块。
+ * 在CacheResolver内部，底层实现使用的是CacheManager获取具体的Cache
+ * <p>
  * Determine the {@link Cache} instance(s) to use for an intercepted method invocation.
  *
  * <p>Implementations must be thread-safe.
@@ -33,6 +36,7 @@ public interface CacheResolver {
 
 	/**
 	 * Return the cache(s) to use for the specified invocation.
+	 *
 	 * @param context the context of the particular invocation
 	 * @return the cache(s) to use (never {@code null})
 	 * @throws IllegalStateException if cache resolution failed
