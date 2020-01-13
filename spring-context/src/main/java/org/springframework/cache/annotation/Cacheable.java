@@ -27,6 +27,8 @@ import java.util.concurrent.Callable;
 import org.springframework.core.annotation.AliasFor;
 
 /**
+ * Spring缓存注解
+ * <p>
  * Annotation indicating that the result of invoking a method (or all methods
  * in a class) can be cached.
  *
@@ -49,8 +51,8 @@ import org.springframework.core.annotation.AliasFor;
  * @author Phillip Webb
  * @author Stephane Nicoll
  * @author Sam Brannen
- * @since 3.1
  * @see CacheConfig
+ * @since 3.1
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -59,6 +61,7 @@ import org.springframework.core.annotation.AliasFor;
 public @interface Cacheable {
 
 	/**
+	 * 缓存名字
 	 * Alias for {@link #cacheNames}.
 	 */
 	@AliasFor("cacheNames")
@@ -68,9 +71,10 @@ public @interface Cacheable {
 	 * Names of the caches in which method invocation results are stored.
 	 * <p>Names may be used to determine the target cache (or caches), matching
 	 * the qualifier value or bean name of a specific bean definition.
-	 * @since 4.2
+	 *
 	 * @see #value
 	 * @see CacheConfig#cacheNames
+	 * @since 4.2
 	 */
 	@AliasFor("value")
 	String[] cacheNames() default {};
@@ -98,15 +102,19 @@ public @interface Cacheable {
 	 * The bean name of the custom {@link org.springframework.cache.interceptor.KeyGenerator}
 	 * to use.
 	 * <p>Mutually exclusive with the {@link #key} attribute.
+	 *
 	 * @see CacheConfig#keyGenerator
 	 */
 	String keyGenerator() default "";
 
 	/**
+	 * 缓存管理器
+	 * <p>
 	 * The bean name of the custom {@link org.springframework.cache.CacheManager} to use to
 	 * create a default {@link org.springframework.cache.interceptor.CacheResolver} if none
 	 * is set already.
 	 * <p>Mutually exclusive with the {@link #cacheResolver}  attribute.
+	 *
 	 * @see org.springframework.cache.interceptor.SimpleCacheResolver
 	 * @see CacheConfig#cacheManager
 	 */
@@ -115,11 +123,14 @@ public @interface Cacheable {
 	/**
 	 * The bean name of the custom {@link org.springframework.cache.interceptor.CacheResolver}
 	 * to use.
+	 *
 	 * @see CacheConfig#cacheResolver
 	 */
 	String cacheResolver() default "";
 
 	/**
+	 * 是一个spEL的表达式，可以设置方法调用表达式，根据返回结果是否进行缓存
+	 * <p>
 	 * Spring Expression Language (SpEL) expression used for making the method
 	 * caching conditional.
 	 * <p>Default is {@code ""}, meaning the method result is always cached.
@@ -158,11 +169,14 @@ public @interface Cacheable {
 	 * can be accessed via {@code #root.args[1]}, {@code #p1} or {@code #a1}. Arguments
 	 * can also be accessed by name if that information is available.</li>
 	 * </ul>
+	 *
 	 * @since 3.2
 	 */
 	String unless() default "";
 
 	/**
+	 * 多线程执行条件下是否进行同步
+	 * <p>
 	 * Synchronize the invocation of the underlying method if several threads are
 	 * attempting to load a value for the same key. The synchronization leads to
 	 * a couple of limitations:
@@ -174,8 +188,9 @@ public @interface Cacheable {
 	 * This is effectively a hint and the actual cache provider that you are
 	 * using may not support it in a synchronized fashion. Check your provider
 	 * documentation for more details on the actual semantics.
-	 * @since 4.3
+	 *
 	 * @see org.springframework.cache.Cache#get(Object, Callable)
+	 * @since 4.3
 	 */
 	boolean sync() default false;
 

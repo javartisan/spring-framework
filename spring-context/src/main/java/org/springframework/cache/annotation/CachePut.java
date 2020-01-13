@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 
 /**
+ * Spring Cache 相关注解。更新缓存注解，一旦类或者方法使用该注解便会主动更新缓存
+ *
  * Annotation indicating that a method (or all methods on a class) triggers a
  * {@link org.springframework.cache.Cache#put(Object, Object) cache put} operation.
  *

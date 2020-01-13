@@ -105,6 +105,7 @@ class CacheOperationExpressionEvaluator extends CachedExpressionEvaluator {
 	}
 
 	public boolean condition(String conditionExpression, AnnotatedElementKey methodKey, EvaluationContext evalContext) {
+		// 计算spEL表达式的值
 		return (Boolean.TRUE.equals(getExpression(this.conditionCache, methodKey, conditionExpression).getValue(
 				evalContext, Boolean.class)));
 	}

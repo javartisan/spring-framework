@@ -29,11 +29,11 @@ public class ContextTest {
 	@Test
 	public void cycleFieldDependency() {
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CycleDependencyConfig.class);
-		A a = context.getBean(A.class);
-		B b = context.getBean(B.class);
-		C c = context.getBean(C.class);
-		System.out.println(a);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		TaskA taskA = context.getBean(TaskA.class);
+		TaskB taskB = context.getBean(TaskB.class);
+		TaskC taskC = context.getBean(TaskC.class);
+		System.out.println(taskA);
 	}
 
 
@@ -41,11 +41,11 @@ public class ContextTest {
 	@Test
 	public void cycleConstuctorDependency() {
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CycleDependencyConfig.class);
-		CA a = context.getBean(CA.class);
-		CB b = context.getBean(CB.class);
-		CC c = context.getBean(CC.class);
-		System.out.println(a);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		CA taskA = context.getBean(CA.class);
+		CB taskB = context.getBean(CB.class);
+		CC taskC = context.getBean(CC.class);
+		System.out.println(taskA);
 	}
 
 

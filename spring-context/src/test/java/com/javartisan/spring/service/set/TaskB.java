@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class B {
+public class TaskB {
 
-	private C c;
+	private TaskC c;
 
 	@Autowired
-	public void setC(C c) {
+	public void setC(TaskC c) {
 		this.c = c;
 	}
 }
