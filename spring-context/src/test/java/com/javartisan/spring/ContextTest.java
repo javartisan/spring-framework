@@ -1,8 +1,10 @@
 package com.javartisan.spring;
 
 import com.javartisan.spring.config.Config;
+import com.javartisan.spring.config.CycleDependencyConfig;
 import com.javartisan.spring.service.UserService;
 import com.javartisan.spring.service.constuctor.*;
+import com.javartisan.spring.service.lookup.SystemService;
 import com.javartisan.spring.service.set.*;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -27,7 +29,7 @@ public class ContextTest {
 	@Test
 	public void cycleFieldDependency() {
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CycleDependencyConfig.class);
 		A a = context.getBean(A.class);
 		B b = context.getBean(B.class);
 		C c = context.getBean(C.class);
@@ -35,12 +37,11 @@ public class ContextTest {
 	}
 
 
-
 	// 循环
 	@Test
 	public void cycleConstuctorDependency() {
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CycleDependencyConfig.class);
 		CA a = context.getBean(CA.class);
 		CB b = context.getBean(CB.class);
 		CC c = context.getBean(CC.class);
@@ -55,5 +56,18 @@ public class ContextTest {
 		System.out.println(context);
 	}
 
+	/**
+	 * 测试lookup注解
+	 */
+	@Test
+	public void testLookUp() {
 
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		for (int i = 0; i < 10; i++) {
+			SystemService bean = context.getBean(SystemService.class);
+			System.out.println(bean);
+		}
+
+
+	}
 }

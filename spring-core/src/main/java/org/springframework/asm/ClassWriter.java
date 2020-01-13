@@ -432,6 +432,7 @@ public class ClassWriter extends ClassVisitor {
   // -----------------------------------------------------------------------------------------------
 
   /**
+   * 返回class文件的字节码
    * Returns the content of the class file that was built by this ClassWriter.
    *
    * @return the binary content of the JVMS ClassFile structure that was built by this ClassWriter.
