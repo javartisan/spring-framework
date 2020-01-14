@@ -66,8 +66,8 @@ import org.springframework.util.StringUtils;
 
 /**
  * 构造器解析工具，用于构造器注入等工作的工具类
- *
- *
+ * <p>
+ * <p>
  * Delegate for resolving constructors and factory methods.
  * Performs constructor resolution through argument matching.
  *
@@ -185,6 +185,7 @@ class ConstructorResolver {
 			if (explicitArgs != null) {
 				minNrOfArgs = explicitArgs.length;
 			} else {
+				//获取当前Bean的构造器参数信息
 				ConstructorArgumentValues cargs = mbd.getConstructorArgumentValues();
 				resolvedValues = new ConstructorArgumentValues();
 				minNrOfArgs = resolveConstructorArguments(beanName, mbd, bw, cargs, resolvedValues);
@@ -614,6 +615,8 @@ class ConstructorResolver {
 	}
 
 	/**
+	 * 解析构造器参数
+	 * <p>
 	 * Resolve the constructor arguments for this bean into the resolvedValues object.
 	 * This may involve looking up other beans.
 	 * <p>This method is also used for handling invocations of static factory methods.

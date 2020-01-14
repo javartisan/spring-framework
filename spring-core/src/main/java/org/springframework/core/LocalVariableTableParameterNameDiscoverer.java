@@ -64,6 +64,11 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 	private final Map<Class<?>, Map<Member, String[]>> parameterNamesCache = new ConcurrentHashMap<>(32);
 
 
+	/**
+	 * 获取指定方法的参数名字
+	 * @param method method to find parameter names for
+	 * @return
+	 */
 	@Override
 	@Nullable
 	public String[] getParameterNames(Method method) {
@@ -80,6 +85,11 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 		return null;
 	}
 
+	/**
+	 * 获取构造器参数名字，底层使用的是ASM工具实现
+	 * @param ctor constructor to find parameter names for
+	 * @return
+	 */
 	@Override
 	@Nullable
 	public String[] getParameterNames(Constructor<?> ctor) {
@@ -96,6 +106,8 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 	}
 
 	/**
+	 * 底层基础方法完成Class元数据的解析
+	 *
 	 * Inspects the target class. Exceptions will be logged and a maker map returned
 	 * to indicate the lack of debug information.
 	 */
