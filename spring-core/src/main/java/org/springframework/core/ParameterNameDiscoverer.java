@@ -27,7 +27,10 @@ import org.springframework.lang.Nullable;
  * 1：debug 信息获取
  * 2：java8 -parameter 编译使用Parameter类获取
  * 3：注解方式获取（使用注解保留参数名字）
- *
+ * <p>
+ *     更多参见：
+ *     1：https://segmentfault.com/a/1190000019290840
+ *     2：https://juejin.im/post/5d556d975188255b07440444
  * ----
  * Interface to discover parameter names for methods and constructors.
  *

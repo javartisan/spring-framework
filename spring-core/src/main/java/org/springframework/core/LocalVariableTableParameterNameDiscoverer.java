@@ -106,7 +106,7 @@ public class LocalVariableTableParameterNameDiscoverer implements ParameterNameD
 	}
 
 	/**
-	 * 底层基础方法完成Class元数据的解析
+	 * 底层基础方法完成Class元数据的解析，是根据Class的debug信息获取方法名字，如果没有debug信息是无法获取到方法名字的。
 	 *
 	 * Inspects the target class. Exceptions will be logged and a maker map returned
 	 * to indicate the lack of debug information.

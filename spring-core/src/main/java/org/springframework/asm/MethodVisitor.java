@@ -28,6 +28,7 @@
 package org.springframework.asm;
 
 /**
+ *
  * A visitor to visit a Java method. The methods of this class must be called in the following
  * order: ( {@code visitParameter} )* [ {@code visitAnnotationDefault} ] ( {@code visitAnnotation} |
  * {@code visitAnnotableParameterCount} | {@code visitParameterAnnotation} {@code
