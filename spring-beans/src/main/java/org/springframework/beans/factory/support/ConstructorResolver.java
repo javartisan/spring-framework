@@ -65,6 +65,9 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 构造器解析工具，用于构造器注入等工作的工具类
+ *
+ *
  * Delegate for resolving constructors and factory methods.
  * Performs constructor resolution through argument matching.
  *
