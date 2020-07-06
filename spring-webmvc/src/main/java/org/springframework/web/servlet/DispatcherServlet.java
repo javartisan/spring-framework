@@ -1011,6 +1011,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				// 检索Controller方法
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null) {
 					noHandlerFound(processedRequest, response);
@@ -1030,10 +1031,16 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
+				// 应用前置拦截器
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
+				/**
+				 * 类型信息：
+				 * ha:RequestMappingHandlerAdapter
+				 * mappedHandler.getHandler(): org.springframework.web.method.HandlerMethod
+				 */
 				// Actually invoke the handler.
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 
