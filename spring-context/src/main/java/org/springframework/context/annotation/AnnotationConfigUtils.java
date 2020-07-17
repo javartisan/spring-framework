@@ -145,9 +145,8 @@ public abstract class AnnotationConfigUtils {
 	}
 
 	/**
-	 *
-	 * 注册注解处理器的方法
-	 *
+	 * 注册 `注解处理器` 到注册中心。
+	 * <p>
 	 * Register all relevant annotation post processors in the given registry.
 	 *
 	 * @param registry the registry to operate on
@@ -171,12 +170,14 @@ public abstract class AnnotationConfigUtils {
 
 		Set<BeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
 
+		//重点：@Configuration注解处理类ConfigurationClassPostProcessor(BeanFactoryPostProcessor) 添加到Bean定义中
 		if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
+		//重点：@Autowired注解处理类AutowiredAnnotationBeanPostProcessor(BeanPostProcessor) 添加到Bean定义中
 		if (!registry.containsBeanDefinition(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(AutowiredAnnotationBeanPostProcessor.class);
 			def.setSource(source);
@@ -190,6 +191,7 @@ public abstract class AnnotationConfigUtils {
 			beanDefs.add(registerPostProcessor(registry, def, COMMON_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
+		//JPA处理类 PersistenceAnnotationBeanPostProcessor(BeanPostProcessor)添加到Bean定义中
 		// Check for JPA support, and if present add the PersistenceAnnotationBeanPostProcessor.
 		if (jpaPresent && !registry.containsBeanDefinition(PERSISTENCE_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition();

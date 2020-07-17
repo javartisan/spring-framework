@@ -108,6 +108,10 @@ public final class SpringFactoriesLoader {
 	}
 
 	/**
+	 *
+	 * spring.factories文件是spring框架级别的bean，用于spring启动之前加载到spring容器中。
+	 *
+	 *
 	 * Load the fully qualified class names of factory implementations of the
 	 * given type from {@value #FACTORIES_RESOURCE_LOCATION}, using the given
 	 * class loader.

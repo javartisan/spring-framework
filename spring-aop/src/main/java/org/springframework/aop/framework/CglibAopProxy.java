@@ -676,6 +676,7 @@ class CglibAopProxy implements AopProxy, Serializable {
 				// Check whether we only have one InvokerInterceptor: that is,
 				// no real advice, but just reflective invocation of the target.
 				if (chain.isEmpty() && Modifier.isPublic(method.getModifiers())) {
+					//没有增强 并且是public方法直接反射调用，如果不是public反射设置accessale进行调用
 					// We can skip creating a MethodInvocation: just invoke the target directly.
 					// Note that the final invoker must be an InvokerInterceptor, so we know
 					// it does nothing but a reflective operation on the target, and no hot

@@ -89,7 +89,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware, EnvironmentAware {
 
 	private static final String IMPORT_REGISTRY_BEAN_NAME =
-			ConfigurationClassPostProcessor.class.getName() + ".importRegistry";
+			ConfigurationClassPostProcessor.class.getName() + ".importRegistrConfigurationClassPostProcessory";
 
 
 	private final Log logger = LogFactory.getLog(getClass());
