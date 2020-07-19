@@ -1063,6 +1063,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * Spring 容易的JVM 钩子 用于Spring停止时候发布ContextClosedEvent事件以及销毁容器中的单例Bean
+	 * <p>
 	 * Actually performs context closing: publishes a ContextClosedEvent and
 	 * destroys the singletons in the bean factory of this application context.
 	 * <p>Called by both {@code close()} and a JVM shutdown hook, if any.
