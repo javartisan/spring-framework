@@ -567,13 +567,22 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
+
 			// Prepare this context for refreshing.
+			// 对上下文中的占位符进行处理，对于Web环境处理的是ServletContext
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
+			// 设置refresh状态为true并获取当前的BeanFactory
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
+			// 重点方法：为Spring容器初始化基本的处理组件 。主要包括：
+			//	 * 1：给容器设置Spring EL表达式解析器
+			//	 * 2：给容器设置ResourceEditorRegistrar
+			//	 * 3：给容器设置ApplicationContextAware的处理器
+			//	 * 4：ResourceLoader、ApplicationContext以及ApplicationEventPublisher注册到容器中
+			//	 * 5：将环境相关信息以Bean的形式注入到容器中
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -688,7 +697,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * 重点方法：为Spring容器初始化基本的处理组件
+	 * 重点方法：为Spring容器初始化基本的处理组件 。主要包括：
+	 * 1：给容器设置Spring EL表达式解析器
+	 * 2：给容器设置ResourceEditorRegistrar
+	 * 3：给容器设置ApplicationContextAware的处理器
+	 * 4：ResourceLoader、ApplicationContext以及ApplicationEventPublisher注册到容器中
+	 * 5：将环境相关信息以Bean的形式注入到容器中
 	 * <p>
 	 * <p>
 	 * Configure the factory's standard context characteristics,
@@ -707,7 +721,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
-		// 设置 ApplicationContextAware的处理逻辑
+		// 设置 ApplicationContextAware的处理器
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 
 		// 忽略如下Bean的依赖注入
@@ -725,6 +739,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.registerResolvableDependency(BeanFactory.class, beanFactory);
 		beanFactory.registerResolvableDependency(ResourceLoader.class, this);
 		beanFactory.registerResolvableDependency(ApplicationEventPublisher.class, this);
+
+
 		//容器中注入ApplicationContext类型的变量
 		beanFactory.registerResolvableDependency(ApplicationContext.class, this);
 
@@ -738,6 +754,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			beanFactory.setTempClassLoader(new ContextTypeMatchClassLoader(beanFactory.getBeanClassLoader()));
 		}
 
+		// 将环境相关信息以Bean的形式注入到容器中
 		// Register default environment beans.
 		if (!beanFactory.containsLocalBean(ENVIRONMENT_BEAN_NAME)) {
 			beanFactory.registerSingleton(ENVIRONMENT_BEAN_NAME, getEnvironment());
