@@ -245,6 +245,12 @@ public abstract class AnnotationConfigUtils {
 		processCommonDefinitionAnnotations(abd, abd.getMetadata());
 	}
 
+	/**
+	 * Lazy、Primary、DependsOn、Role、Description等common definition annotations处理，将属性值设置到AnnotatedBeanDefinition
+	 *
+	 * @param abd
+	 * @param metadata
+	 */
 	static void processCommonDefinitionAnnotations(AnnotatedBeanDefinition abd, AnnotatedTypeMetadata metadata) {
 		AnnotationAttributes lazy = attributesFor(metadata, Lazy.class);
 		if (lazy != null) {

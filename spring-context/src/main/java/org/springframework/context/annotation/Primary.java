@@ -23,6 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 当按照类型注入时候，如果存在相同类型多个实例时候，如果有Bean标注Primary注解的优先注入
+ * <p>
  * Indicates that a bean should be given preference when multiple candidates
  * are qualified to autowire a single-valued dependency. If exactly one
  * 'primary' bean exists among the candidates, it will be the autowired value.
@@ -76,11 +78,11 @@ import java.lang.annotation.Target;
  *
  * @author Chris Beams
  * @author Juergen Hoeller
- * @since 3.0
  * @see Lazy
  * @see Bean
  * @see ComponentScan
  * @see org.springframework.stereotype.Component
+ * @since 3.0
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
