@@ -66,7 +66,7 @@ import org.springframework.util.ClassUtils;
 import static org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR;
 
 /**
- * 由Configuration注解定义的Bean的定义由该ConfigurationClassPostProcessor后置处理器处理
+ *  由Configuration注解定义的Bean的定义由该ConfigurationClassPostProcessor后置处理器处理
  * <p>
  * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
  * {@link Configuration @Configuration} classes.
@@ -259,7 +259,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
-	 * 查找Configuration类并注册Bean定义到BeanDefinitionRegistry中
+	 *  查找Configuration类并注册Bean定义到BeanDefinitionRegistry中
 	 * <p>
 	 * Build and validate a configuration model based on the registry of
 	 * {@link Configuration} classes.
