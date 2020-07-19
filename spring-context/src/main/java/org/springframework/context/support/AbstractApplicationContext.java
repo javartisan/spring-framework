@@ -555,7 +555,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Spring最核心的方法,容器启动的整个过程都在这个方法里面
+	 * Spring最核心的方法,容器启动的整个过程都在这个方法里面.
+	 * Spring的关键方法:
+	 * 首次加载或者刷新当前的持久的配置(配置可能是：XML文件、属性文件或者关系数据库Schema)。
+	 * 注意：refresh方法是一个容器启动方法，如果启动失败需要销毁已经创建的单例Bean。
+	 * 换句话说：当此方法被调用完毕，要么所有实例都被实例化，要么都没有实例化。
 	 *
 	 * @throws BeansException
 	 * @throws IllegalStateException
