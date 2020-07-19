@@ -1,8 +1,10 @@
 package com.javartisan.spring;
 
 import com.javartisan.spring.config.Config;
+import com.javartisan.spring.config.CycleDependencyConfig;
 import com.javartisan.spring.service.UserService;
 import com.javartisan.spring.service.constuctor.*;
+import com.javartisan.spring.service.lookup.SystemService;
 import com.javartisan.spring.service.set.*;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -54,5 +56,18 @@ public class ContextTest {
 		System.out.println(context);
 	}
 
+	/**
+	 * 测试lookup注解
+	 */
+	@Test
+	public void testLookUp() {
 
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		for (int i = 0; i < 10; i++) {
+			SystemService bean = context.getBean(SystemService.class);
+			System.out.println(bean);
+		}
+
+
+	}
 }

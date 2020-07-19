@@ -670,7 +670,7 @@ class ConstructorResolver {
 	}
 
 	/**
-	 * 创建一个参数数组，该参数数组用于调用构造器
+	 * 创建一个参数数组，该参数数组用于调用构造器。对于构造器注入时候会在此处构建构造器参数
 	 * <p>
 	 * Create an array of arguments to invoke a constructor or factory method,
 	 * given the resolved constructor argument values.
