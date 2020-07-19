@@ -303,9 +303,11 @@ class ConfigurationClassParser {
 			}
 		}
 
+		// 重点：处理@Import注解
 		// Process any @Import annotations
 		processImports(configClass, sourceClass, getImports(sourceClass), true);
 
+		// 重点：处理@ImportResource注解
 		// Process any @ImportResource annotations
 		AnnotationAttributes importResource =
 				AnnotationConfigUtils.attributesFor(sourceClass.getMetadata(), ImportResource.class);
@@ -318,6 +320,7 @@ class ConfigurationClassParser {
 			}
 		}
 
+		// 处理@Bean
 		// Process individual @Bean methods
 		Set<MethodMetadata> beanMethods = retrieveBeanMethodMetadata(sourceClass);
 		for (MethodMetadata methodMetadata : beanMethods) {
@@ -540,6 +543,19 @@ class ConfigurationClassParser {
 	}
 
 
+	/**
+	 *   Imports处理注解：对于常见注解都在如下方法进行处理：
+	 * 		1：org.springframework.boot.autoconfigure.AutoConfigurationPackages$Registrar,
+	 * 		2：org.springframework.boot.autoconfigure.AutoConfigurationImportSelector,
+	 * 		3：org.springframework.context.annotation.AspectJAutoProxyRegistrar,
+	 * 		4：org.springframework.transaction.annotation.TransactionManagementConfigurationSelector,
+	 * 		5：org.springframework.data.jpa.repository.config.JpaRepositoriesRegistrar
+	 *
+	 * @param configClass
+	 * @param currentSourceClass
+	 * @param importCandidates
+	 * @param checkForCircularImports
+	 */
 	private void processImports(ConfigurationClass configClass, SourceClass currentSourceClass,
 								Collection<SourceClass> importCandidates, boolean checkForCircularImports) {
 
