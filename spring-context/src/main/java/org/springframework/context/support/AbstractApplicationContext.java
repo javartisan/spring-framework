@@ -587,7 +587,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
-				//
+				//  此时可以修改ApplicationContext内部的BeanFactory，所有的Bean的定义都已经被加载，但是此刻没有Bean创建。
+				//  由于此刻没有Bean创建，此时还可以继续注册BeanPostProcessors到ApplicationContext。
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
@@ -768,6 +769,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
+	 * 此时可以修改ApplicationContext内部的BeanFactory，所有的Bean的定义都已经被加载，但是此刻没有Bean创建。
+	 * 由于此刻没有Bean创建，此时还可以继续注册BeanPostProcessors到ApplicationContext。
+	 * <p>
 	 * Modify the application context's internal bean factory after its standard
 	 * initialization. All bean definitions will have been loaded, but no beans
 	 * will have been instantiated yet. This allows for registering special

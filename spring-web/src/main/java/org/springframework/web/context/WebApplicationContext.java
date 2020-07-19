@@ -55,18 +55,23 @@ public interface WebApplicationContext extends ApplicationContext {
 	String ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE = WebApplicationContext.class.getName() + ".ROOT";
 
 	/**
+	 *
+	 * 参见：https://docs.spring.io/spring/docs/3.0.0.M4/reference/html/ch03s05.html
+	 *
 	 * Scope identifier for request scope: "request".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
 	String SCOPE_REQUEST = "request";
 
 	/**
+	 * 参见：https://docs.spring.io/spring/docs/3.0.0.M4/reference/html/ch03s05.html
 	 * Scope identifier for session scope: "session".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
 	String SCOPE_SESSION = "session";
 
 	/**
+	 * 参见：https://docs.spring.io/spring/docs/3.0.0.M4/reference/html/ch03s05.html
 	 * Scope identifier for the global web application scope: "application".
 	 * Supported in addition to the standard scopes "singleton" and "prototype".
 	 */
