@@ -31,7 +31,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * 重点：Spring AOP管理事务的Advice类
+ * 重点：Spring AOP管理事务的Advice类 。
+ * 在org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration#transactionInterceptor()方法加入到容器。
  *
  * AOP Alliance MethodInterceptor for declarative transaction
  * management using the common Spring transaction infrastructure

@@ -21,6 +21,9 @@ import java.lang.reflect.Method;
 import org.springframework.lang.Nullable;
 
 /**
+ *
+ * 参见：org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration#transactionAttributeSource()
+ *
  * Strategy interface used by {@link TransactionInterceptor} for metadata retrieval.
  *
  * <p>Implementations know how to source transaction attributes, whether from configuration,
