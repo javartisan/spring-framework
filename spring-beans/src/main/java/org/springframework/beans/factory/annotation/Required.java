@@ -22,6 +22,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 使用在Setter方法上面的注解标识对应属性是必须的注入的。参考RequiredAnnotationBeanPostProcessor后置处理器 。
+ * 注意：该注解在Spring5.1之后版本已经过时，可以使用构造器注入方式或者InitializingBean方式（如果存在循环依赖注入问题可以使用此方案）。
+ * <p>
  * Marks a method (typically a JavaBean setter method) as being 'required': that is,
  * the setter method must be configured to be dependency-injected with a value.
  *
@@ -29,8 +32,8 @@ import java.lang.annotation.Target;
  * class (which, by default, checks for the presence of this annotation).
  *
  * @author Rob Harrop
- * @since 2.0
  * @see RequiredAnnotationBeanPostProcessor
+ * @since 2.0
  * @deprecated as of 5.1, in favor of using constructor injection for required settings
  * (or a custom {@link org.springframework.beans.factory.InitializingBean} implementation)
  */
