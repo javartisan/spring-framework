@@ -53,9 +53,6 @@ final class PostProcessorRegistrationDelegate {
 
 
 	/**
-	 * 主要完成几件事：
-	 * 1：会注册以Configuration形式定义的Bean到BeanDefinitionRegistry
-	 * 2：
 	 *
 	 * @param beanFactory
 	 * @param beanFactoryPostProcessors
