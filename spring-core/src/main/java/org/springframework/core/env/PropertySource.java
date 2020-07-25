@@ -24,7 +24,13 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
- * Spring中的KV配置抽象
+ * PropertySource 是spring 属性配置的抽象,PropertySource是用于存储KV键值对的集合，source用于存储键值对(source封装properties)。
+ * <p>
+ * PropertySource 有多种实现，例如YML实现，随机数实现 。
+ * 注意：PropertySource是属性的集合，并不表示一个KV键值对
+ *
+ *
+ *
  * <p>
  * Abstract base class representing a source of name/value property pairs. The underlying
  * {@linkplain #getSource() source object} may be of any type {@code T} that encapsulates
