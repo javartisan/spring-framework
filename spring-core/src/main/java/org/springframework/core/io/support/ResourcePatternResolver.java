@@ -45,19 +45,26 @@ import org.springframework.core.io.ResourceLoader;
  * JAR files or classes directories can contain multiple files of the same name.
  *
  * @author Juergen Hoeller
- * @since 1.0.2
  * @see org.springframework.core.io.Resource
  * @see org.springframework.core.io.ResourceLoader
  * @see org.springframework.context.ApplicationContext
  * @see org.springframework.context.ResourceLoaderAware
+ * @since 1.0.2
  */
 public interface ResourcePatternResolver extends ResourceLoader {
 
 	/**
+	 * 参见:https://stackoverflow.com/questions/3294423/spring-classpath-prefix-difference
+	 * The classpath*:conf/appContext.xml simply means that all appContext.xml files under conf folders in all your jars on the classpath will be picked up and joined into one big application context.
+	 * <p>
+	 * In contrast, classpath:conf/appContext.xml will load only one such file... the first one found on your classpath.
+	 * <p>
+	 * <p>
 	 * Pseudo URL prefix for all matching resources from the class path: "classpath*:"
 	 * This differs from ResourceLoader's classpath URL prefix in that it
 	 * retrieves all matching resources for a given name (e.g. "/beans.xml"),
 	 * for example in the root of all deployed JAR files.
+	 *
 	 * @see org.springframework.core.io.ResourceLoader#CLASSPATH_URL_PREFIX
 	 */
 	String CLASSPATH_ALL_URL_PREFIX = "classpath*:";
@@ -67,6 +74,7 @@ public interface ResourcePatternResolver extends ResourceLoader {
 	 * <p>Overlapping resource entries that point to the same physical
 	 * resource should be avoided, as far as possible. The result should
 	 * have set semantics.
+	 *
 	 * @param locationPattern the location pattern to resolve
 	 * @return the corresponding Resource objects
 	 * @throws IOException in case of I/O errors
