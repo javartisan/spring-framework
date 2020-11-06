@@ -1,6 +1,7 @@
 package com.javartisan.spring;
 
 import com.javartisan.spring.config.Config;
+import com.javartisan.spring.config.ConfigRepo;
 import com.javartisan.spring.service.UserService;
 import com.javartisan.spring.service.constuctor.*;
 import com.javartisan.spring.service.set.*;
@@ -17,7 +18,7 @@ public class ContextTest {
 	@Test
 	public void testAnnotationConfigApplicationContextStart() {
 
-		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigRepo.class);
 		UserService userService = context.getBean(UserService.class);
 		System.out.println(userService);
 	}
