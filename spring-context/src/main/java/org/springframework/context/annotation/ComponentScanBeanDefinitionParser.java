@@ -155,7 +155,7 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 			annotationConfig = Boolean.valueOf(element.getAttribute(ANNOTATION_CONFIG_ATTRIBUTE));
 		}
 		if (annotationConfig) {
-			// 根据配置判断是否开启了注解配置，如果开启的话进行注解处理器的注解
+			// XML 根据配置判断是否开启了注解配置，如果开启,则进行注解处理器的BeanDefinition的注册
 			Set<BeanDefinitionHolder> processorDefinitions =
 					AnnotationConfigUtils.registerAnnotationConfigProcessors(readerContext.getRegistry(), source);
 			for (BeanDefinitionHolder processorDefinition : processorDefinitions) {

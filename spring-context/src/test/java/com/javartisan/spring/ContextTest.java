@@ -2,7 +2,7 @@ package com.javartisan.spring;
 
 import com.javartisan.spring.config.Config;
 import com.javartisan.spring.config.ConfigRepo;
-import com.javartisan.spring.service.UserService;
+import com.javartisan.spring.repo.UserDao;
 import com.javartisan.spring.service.constuctor.*;
 import com.javartisan.spring.service.set.*;
 import org.junit.Test;
@@ -19,8 +19,10 @@ public class ContextTest {
 	public void testAnnotationConfigApplicationContextStart() {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigRepo.class);
-		UserService userService = context.getBean(UserService.class);
-		System.out.println(userService);
+		UserDao userDao = context.getBean(UserDao.class);
+		System.err.println("=======================================");
+		System.out.println(userDao);
+		System.err.println("=======================================");
 	}
 
 

@@ -46,6 +46,7 @@ import org.springframework.util.Assert;
 public abstract class AopConfigUtils {
 
 	/**
+	 *
 	 * The bean name of the internally managed auto-proxy creator.
 	 */
 	public static final String AUTO_PROXY_CREATOR_BEAN_NAME =
@@ -119,7 +120,7 @@ public abstract class AopConfigUtils {
 			Class<?> cls, BeanDefinitionRegistry registry, @Nullable Object source) {
 
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
-
+		// 判断是否有代理BeanPostProcessor
 		if (registry.containsBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME)) {
 			BeanDefinition apcDefinition = registry.getBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME);
 			if (!cls.getName().equals(apcDefinition.getBeanClassName())) {
@@ -135,6 +136,7 @@ public abstract class AopConfigUtils {
 		RootBeanDefinition beanDefinition = new RootBeanDefinition(cls);
 		beanDefinition.setSource(source);
 		beanDefinition.getPropertyValues().add("order", Ordered.HIGHEST_PRECEDENCE);
+		//注册代理BeanPostProcessor
 		beanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
 		registry.registerBeanDefinition(AUTO_PROXY_CREATOR_BEAN_NAME, beanDefinition);
 		return beanDefinition;

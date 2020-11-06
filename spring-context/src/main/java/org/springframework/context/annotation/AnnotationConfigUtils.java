@@ -82,6 +82,7 @@ public abstract class AnnotationConfigUtils {
 			"org.springframework.context.annotation.internalConfigurationBeanNameGenerator";
 
 	/**
+	 *
 	 * The bean name of the internally managed Autowired annotation processor.
 	 */
 	public static final String AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME =
@@ -97,6 +98,7 @@ public abstract class AnnotationConfigUtils {
 			"org.springframework.context.annotation.internalRequiredAnnotationProcessor";
 
 	/**
+	 *
 	 * The bean name of the internally managed JSR-250 annotation processor.
 	 */
 	public static final String COMMON_ANNOTATION_PROCESSOR_BEAN_NAME =
@@ -170,21 +172,21 @@ public abstract class AnnotationConfigUtils {
 
 		Set<BeanDefinitionHolder> beanDefs = new LinkedHashSet<>(8);
 
-		//重点：@Configuration注解处理类ConfigurationClassPostProcessor(BeanFactoryPostProcessor) 添加到Bean定义中
+		//重点：@Configuration 注解处理类ConfigurationClassPostProcessor(BeanFactoryPostProcessor) 添加到Bean定义中
 		if (!registry.containsBeanDefinition(CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(ConfigurationClassPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
-		//重点：@Autowired注解处理类AutowiredAnnotationBeanPostProcessor(BeanPostProcessor) 添加到Bean定义中
+		//重点：@Autowired 注解处理类AutowiredAnnotationBeanPostProcessor(BeanPostProcessor) 添加到Bean定义中 。通常是在applicationContext构造器调用触发完成
 		if (!registry.containsBeanDefinition(AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(AutowiredAnnotationBeanPostProcessor.class);
 			def.setSource(source);
 			beanDefs.add(registerPostProcessor(registry, def, AUTOWIRED_ANNOTATION_PROCESSOR_BEAN_NAME));
 		}
 
-		// 对Java中的常见注解(PostConstruct,PreDestroy,Resource)进行支持，开箱即用。
+		// 对Java中的常见注解(PostConstruct,PreDestroy,Resource)进行支持，开箱即用。通常是在applicationContext构造器中触发调用完成
 		// Check for JSR-250 support, and if present add the CommonAnnotationBeanPostProcessor.
 		if (jsr250Present && !registry.containsBeanDefinition(COMMON_ANNOTATION_PROCESSOR_BEAN_NAME)) {
 			RootBeanDefinition def = new RootBeanDefinition(CommonAnnotationBeanPostProcessor.class);
