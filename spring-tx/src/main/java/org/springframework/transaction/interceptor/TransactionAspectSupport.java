@@ -40,7 +40,7 @@ import org.springframework.util.ConcurrentReferenceHashMap;
 import org.springframework.util.StringUtils;
 
 /**
- * 事务Advice的 父类
+ * 事务切换的基类<br/><br/>
  * Base class for transactional aspects, such as the {@link TransactionInterceptor}
  * or an AspectJ aspect.
  *
@@ -296,11 +296,12 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 		if (txAttr == null || !(tm instanceof CallbackPreferringPlatformTransactionManager)) {
 			// Standard transaction demarcation with getTransaction and commit/rollback calls.
-			TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);
+			TransactionInfo txInfo = createTransactionIfNecessary(tm, txAttr, joinpointIdentification);// 如果当前没有事务则创建事务
 			Object retVal = null;
 			try {
 				// This is an around advice: Invoke the next interceptor in the chain.
 				// This will normally result in a target object being invoked.
+				//此处会链式逐层调用Around Advice
 				retVal = invocation.proceedWithInvocation();
 			} catch (Throwable ex) {
 				// target invocation exception
@@ -381,16 +382,21 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 		}
 
 		String qualifier = txAttr.getQualifier();
-		if (StringUtils.hasText(qualifier)) {
+		if (StringUtils.hasText(qualifier)) { // qualifier非空
 			return determineQualifiedTransactionManager(this.beanFactory, qualifier);
-		} else if (StringUtils.hasText(this.transactionManagerBeanName)) {
+		} else if (StringUtils.hasText(this.transactionManagerBeanName)) { // transactionManagerBeanName非空
+			// 没有qualifier 就是按照PlatformTransactionManager bean name检索
 			return determineQualifiedTransactionManager(this.beanFactory, this.transactionManagerBeanName);
 		} else {
+			// qualifier与transactionManagerBeanName皆空
 			PlatformTransactionManager defaultTransactionManager = getTransactionManager();
 			if (defaultTransactionManager == null) {
+				//成员变量为空，缓存查找
 				defaultTransactionManager = this.transactionManagerCache.get(DEFAULT_TRANSACTION_MANAGER_KEY);
 				if (defaultTransactionManager == null) {
+					//缓存为空，按照类型去BeanFactory里面查找
 					defaultTransactionManager = this.beanFactory.getBean(PlatformTransactionManager.class);
+					//存储到缓存中
 					this.transactionManagerCache.putIfAbsent(
 							DEFAULT_TRANSACTION_MANAGER_KEY, defaultTransactionManager);
 				}
@@ -402,8 +408,10 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 	private PlatformTransactionManager determineQualifiedTransactionManager(BeanFactory beanFactory, String qualifier) {
 		PlatformTransactionManager txManager = this.transactionManagerCache.get(qualifier);
 		if (txManager == null) {
+			// 根据事务的qualifier检索PlatformTransactionManager
 			txManager = BeanFactoryAnnotationUtils.qualifiedBeanOfType(
 					beanFactory, PlatformTransactionManager.class, qualifier);
+			//检索之后存储到缓存之中
 			this.transactionManagerCache.putIfAbsent(qualifier, txManager);
 		}
 		return txManager;
@@ -549,8 +557,10 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 				logger.trace("Completing transaction for [" + txInfo.getJoinpointIdentification() +
 						"] after exception: " + ex);
 			}
+			// txInfo.transactionAttribute.rollbackOn(ex) 用于判断当前事务是否回滚？（我们可以在指定事务注解时候指定什么异常回滚）
 			if (txInfo.transactionAttribute != null && txInfo.transactionAttribute.rollbackOn(ex)) {
 				try {
+					// 事务回滚
 					txInfo.getTransactionManager().rollback(txInfo.getTransactionStatus());
 				} catch (TransactionSystemException ex2) {
 					logger.error("Application exception overridden by rollback exception", ex);
@@ -561,9 +571,11 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 					throw ex2;
 				}
 			} else {
+				// 事务属性transactionAttribute为空或者异常不满足回滚规则，直接处理事务
 				// We don't roll back on this exception.
 				// Will still roll back if TransactionStatus.isRollbackOnly() is true.
 				try {
+					//提交事务
 					txInfo.getTransactionManager().commit(txInfo.getTransactionStatus());
 				} catch (TransactionSystemException ex2) {
 					logger.error("Application exception overridden by commit exception", ex);
