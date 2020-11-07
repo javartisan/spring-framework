@@ -555,22 +555,13 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		return this.applicationListeners;
 	}
 
-	/**
-	 * Spring最核心的方法,容器启动的整个过程都在这个方法里面.
-	 * Spring的关键方法:
-	 * 首次加载或者刷新当前的持久的配置(配置可能是：XML文件、属性文件或者关系数据库Schema)。
-	 * 注意：refresh方法是一个容器启动方法，如果启动失败需要销毁已经创建的单例Bean。
-	 * 换句话说：当此方法被调用完毕，要么所有实例都被实例化，要么都没有实例化。
-	 *
-	 * @throws BeansException
-	 * @throws IllegalStateException
-	 */
+
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
 		synchronized (this.startupShutdownMonitor) {
 
 			// Prepare this context for refreshing.
-			// 对上下文中的占位符进行处理，对于Web环境处理的是ServletContext
+			// 对上下文中的占位符进行处理，对于Web环境处理的是ServletContext，同时验证Environment正确性
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
@@ -665,7 +656,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment
-		//在Web环境下会做一些初始化工作，细节有待了解
+		//在Web环境下会做一些初始化工作，在Web环境下，子类会重写事件
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable

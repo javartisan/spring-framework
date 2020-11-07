@@ -2,11 +2,13 @@ package com.javartisan.spring;
 
 import com.javartisan.spring.config.Config;
 import com.javartisan.spring.config.ConfigRepo;
-import com.javartisan.spring.repo.UserDao;
+import com.javartisan.spring.repo.*;
 import com.javartisan.spring.service.constuctor.*;
 import com.javartisan.spring.service.set.*;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class ContextTest {
@@ -16,13 +18,20 @@ public class ContextTest {
 
 
 	@Test
-	public void testAnnotationConfigApplicationContextStart() {
+	public void testAnnotationConfigApplicationContextStart() throws InterruptedException {
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(ConfigRepo.class);
 		UserDao userDao = context.getBean(UserDao.class);
+		ContainerHolder containerHolder = context.getBean(ContainerHolder.class);
+		IgnoreInterfaceBean ignoreInterfaceBean = context.getBean(IgnoreInterfaceBean.class);
+		System.out.println(ignoreInterfaceBean);
+		ContainerHolderTestBean containerHolderTestBean = context.getBean(ContainerHolderTestBean.class);
 		System.err.println("=======================================");
 		System.out.println(userDao);
 		System.err.println("=======================================");
+		AsyncSimpleApplicationEventMulticaster multicaster = context.getBean(AsyncSimpleApplicationEventMulticaster.class);
+		multicaster.multicastEvent(new ContextRefreshedEvent(context));
+		Thread.sleep(200000);
 	}
 
 

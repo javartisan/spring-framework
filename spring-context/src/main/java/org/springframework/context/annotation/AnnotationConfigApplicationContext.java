@@ -65,6 +65,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 		super();
 		//调用GenericApplicationContext构造器会初始化容器DefaultListableBeanFactory
 		this.reader = new AnnotatedBeanDefinitionReader(this);
+		// 注册Component的BeanPostProcessor处理器
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
