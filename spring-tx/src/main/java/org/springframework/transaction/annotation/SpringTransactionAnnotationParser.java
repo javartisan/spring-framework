@@ -46,8 +46,7 @@ public class SpringTransactionAnnotationParser implements TransactionAnnotationP
 				element, Transactional.class, false, false);
 		if (attributes != null) {
 			return parseTransactionAnnotation(attributes);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -67,13 +66,16 @@ public class SpringTransactionAnnotationParser implements TransactionAnnotationP
 		rbta.setReadOnly(attributes.getBoolean("readOnly"));
 		rbta.setQualifier(attributes.getString("value"));
 
+		// 处理事务回滚异常规则
 		List<RollbackRuleAttribute> rollbackRules = new ArrayList<>();
+		//解析什么异常回滚
 		for (Class<?> rbRule : attributes.getClassArray("rollbackFor")) {
 			rollbackRules.add(new RollbackRuleAttribute(rbRule));
 		}
 		for (String rbRule : attributes.getStringArray("rollbackForClassName")) {
 			rollbackRules.add(new RollbackRuleAttribute(rbRule));
 		}
+		//解析什么异常不回滚
 		for (Class<?> rbRule : attributes.getClassArray("noRollbackFor")) {
 			rollbackRules.add(new NoRollbackRuleAttribute(rbRule));
 		}
