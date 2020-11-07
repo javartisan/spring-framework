@@ -161,6 +161,8 @@ public abstract class AbstractApplicationEventMulticaster
 	}
 
 	/**
+	 *  根据事件类型获取指定的Listener
+	 *
 	 * Return a Collection of ApplicationListeners matching the given
 	 * event type. Non-matching listeners get excluded early.
 	 * @param event the event to be propagated. Allows for excluding
