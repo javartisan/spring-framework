@@ -26,13 +26,15 @@ import org.springframework.transaction.TransactionDefinition;
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
- * @since 16.03.2003
  * @see DefaultTransactionAttribute
  * @see RuleBasedTransactionAttribute
+ * @since 16.03.2003
  */
 public interface TransactionAttribute extends TransactionDefinition {
 
 	/**
+	 * qualifier可以理解为PlatformTransactionManager的别名
+	 * <p>
 	 * Return a qualifier value associated with this transaction attribute.
 	 * <p>This may be used for choosing a corresponding transaction manager
 	 * to process this specific transaction.
@@ -41,7 +43,11 @@ public interface TransactionAttribute extends TransactionDefinition {
 	String getQualifier();
 
 	/**
+	 * 用于判断什么异常进行回滚，例如 {@link org.springframework.transaction.interceptor.DefaultTransactionAttribute#rollbackOn(java.lang.Throwable)}实现：
+	 * 满足这两个条件则进行回滚：(ex instanceof RuntimeException || ex instanceof Error);
+	 * <p>
 	 * Should we roll back on the given exception?
+	 *
 	 * @param ex the exception to evaluate
 	 * @return whether to perform a rollback or not
 	 */
