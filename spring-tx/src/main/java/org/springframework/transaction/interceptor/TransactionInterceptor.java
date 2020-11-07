@@ -32,7 +32,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 /**
  * 重点：Spring AOP管理事务的Advice类 。
- * 在org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration#transactionInterceptor()方法加入到容器。
+ * 在org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration#transactionInterceptor()方法加入到容器。<br/><br/><br/>
  *
  * AOP Alliance MethodInterceptor for declarative transaction
  * management using the common Spring transaction infrastructure
