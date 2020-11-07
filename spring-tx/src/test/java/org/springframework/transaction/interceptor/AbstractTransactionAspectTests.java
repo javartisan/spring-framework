@@ -71,6 +71,7 @@ public abstract class AbstractTransactionAspectTests {
 		PlatformTransactionManager ptm = mock(PlatformTransactionManager.class);
 
 		TestBean tb = new TestBean();
+		// 没有事务属性，因此没有事务执行
 		TransactionAttributeSource tas = new MapTransactionAttributeSource();
 
 		// All the methods in this class use the advised() template method
@@ -92,7 +93,7 @@ public abstract class AbstractTransactionAspectTests {
 	@Test
 	public void transactionShouldSucceed() throws Exception {
 		TransactionAttribute txatt = new DefaultTransactionAttribute();
-
+		// 设置事务属性，因此会有事务环境执行
 		MapTransactionAttributeSource tas = new MapTransactionAttributeSource();
 		tas.register(getNameMethod, txatt);
 
