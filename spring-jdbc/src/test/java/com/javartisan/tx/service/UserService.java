@@ -10,4 +10,9 @@ public class UserService {
 	public void echo() {
 		System.out.println(getClass());
 	}
+
+	@Transactional
+	public void echo(String name) {
+		System.out.println(getClass() + " " + name);
+	}
 }
