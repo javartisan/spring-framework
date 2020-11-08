@@ -19,6 +19,8 @@ package org.springframework.context.annotation;
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
+ * ImportSelector 主要功能是基于注解的元数据条件校验应该引入哪个 @{@link Configuration} Class
+ * <p>
  * Interface to be implemented by types that determine which @{@link Configuration}
  * class(es) should be imported based on a given selection criteria, usually one or more
  * annotation attributes.
@@ -39,11 +41,11 @@ import org.springframework.core.type.AnnotationMetadata;
  * for details).
  *
  * @author Chris Beams
- * @since 3.1
  * @see DeferredImportSelector
  * @see Import
  * @see ImportBeanDefinitionRegistrar
  * @see Configuration
+ * @since 3.1
  */
 public interface ImportSelector {
 

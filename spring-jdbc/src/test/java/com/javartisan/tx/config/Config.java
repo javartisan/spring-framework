@@ -1,5 +1,6 @@
 package com.javartisan.tx.config;
 
+import org.h2.Driver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,16 +28,11 @@ public class Config {
 			return dataSource;
 		}
 		Properties props = new Properties();
-		props.setProperty("driverClassName", "com.mysql.cj.jdbc.Driver");
-		props.setProperty("url", "jdbc:mysql://localhost:3306/daxin");
-		props.setProperty("username", "root");
-		props.setProperty("password", "root");
 		props.setProperty("maxActive", "200");
 		props.setProperty("maxIdle", "20");
 		props.setProperty("maxWait", "30000");
 		try {
-
-			dataSource = new SimpleDriverDataSource();
+			dataSource = new SimpleDriverDataSource(new Driver(), "jdbc:h2:mem:artisan", props);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
