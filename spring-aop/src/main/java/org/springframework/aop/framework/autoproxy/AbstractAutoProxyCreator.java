@@ -32,6 +32,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.Pointcut;
 import org.springframework.aop.TargetSource;
+import org.springframework.aop.aspectj.annotation.AbstractAspectJAdvisorFactory;
 import org.springframework.aop.framework.AopInfrastructureBean;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.ProxyProcessorSupport;
@@ -365,8 +366,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		}
 
 		/**
-		 *  根据ClassName与BeanName查找Advice应用增强
-		 * Create proxy if we have advice.
+		 *  根据ClassName与BeanName查找Advice应用增强.此处逻辑是统一的，无论是基于动态代理(例如事务的方式)的增强还是@Aspect（@Aspect方式）注解方式都会统一此处处理。
+		 *  提示： Spring前期会解析@Aspect注解的类，解析生成Advice存储Spring容器之后后续统一创建代理类。解析@Aspect的类是：{@link AbstractAspectJAdvisorFactory}
+		 *  Create proxy if we have advice.
 		 */
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		if (specificInterceptors != DO_NOT_PROXY) {

@@ -89,7 +89,7 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 
 
 	/**
-	 * 查找Spring切面，用于增强
+	 * 查找Spring切面，用于增强 查找的是@Aspect的实例切面
 	 *
 	 * @return
 	 */
