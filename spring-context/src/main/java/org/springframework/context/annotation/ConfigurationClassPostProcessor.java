@@ -66,7 +66,7 @@ import org.springframework.util.ClassUtils;
 import static org.springframework.context.annotation.AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR;
 
 /**
- *  由Configuration注解定义的Bean的定义由该ConfigurationClassPostProcessor后置处理器处理
+ * 由Configuration注解定义的Bean的定义由该ConfigurationClassPostProcessor后置处理器处理
  * <p>
  * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
  * {@link Configuration @Configuration} classes.
@@ -237,6 +237,10 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
+	 * TODO : 待学习
+	 * <p>
+	 *
+	 * <p>
 	 * Prepare the Configuration classes for servicing bean requests at runtime
 	 * by replacing them with CGLIB-enhanced subclasses.
 	 */
@@ -259,7 +263,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
-	 *  查找Configuration类并注册Bean定义到BeanDefinitionRegistry中
+	 * 查找Configuration类并注册Bean定义到BeanDefinitionRegistry中
 	 * <p>
 	 * Build and validate a configuration model based on the registry of
 	 * {@link Configuration} classes.
@@ -368,6 +372,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
+	 * Configuration配置类生成增强的代理类
+	 * <p>
 	 * Post-processes a BeanFactory in search of Configuration class BeanDefinitions;
 	 * any candidates are then enhanced by a {@link ConfigurationClassEnhancer}.
 	 * Candidate status is determined by BeanDefinition attribute metadata.
