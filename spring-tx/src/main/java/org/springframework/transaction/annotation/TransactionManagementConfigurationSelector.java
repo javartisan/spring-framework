@@ -46,7 +46,11 @@ public class TransactionManagementConfigurationSelector extends AdviceModeImport
 	@Override
 	protected String[] selectImports(AdviceMode adviceMode) {
 		switch (adviceMode) {
-			// 两套事务的实现方式，一套是基于代理模式
+			/**
+			 * 两套事务的实现方式，一套是基于代理模式。
+			 * 注册Spring事务管理的Config类： {@link ProxyTransactionManagementConfiguration}
+			 *
+			 */
 			case PROXY:
 				return new String[]{AutoProxyRegistrar.class.getName(),
 						ProxyTransactionManagementConfiguration.class.getName()};

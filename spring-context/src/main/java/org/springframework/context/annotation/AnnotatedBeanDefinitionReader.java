@@ -251,6 +251,7 @@ public class AnnotatedBeanDefinitionReader {
 				}
 			}
 		}
+		// 修改BeanDefinition
 		for (BeanDefinitionCustomizer customizer : definitionCustomizers) {
 			customizer.customize(abd);
 		}
