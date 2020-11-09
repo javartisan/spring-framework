@@ -29,11 +29,11 @@ import org.springframework.util.ClassUtils;
  *
  * @author Chris Beams
  * @author Juergen Hoeller
- * @since 3.1
  * @see EnableTransactionManagement
  * @see ProxyTransactionManagementConfiguration
  * @see TransactionManagementConfigUtils#TRANSACTION_ASPECT_CONFIGURATION_CLASS_NAME
  * @see TransactionManagementConfigUtils#JTA_TRANSACTION_ASPECT_CONFIGURATION_CLASS_NAME
+ * @since 3.1
  */
 public class TransactionManagementConfigurationSelector extends AdviceModeImportSelector<EnableTransactionManagement> {
 
@@ -46,11 +46,21 @@ public class TransactionManagementConfigurationSelector extends AdviceModeImport
 	@Override
 	protected String[] selectImports(AdviceMode adviceMode) {
 		switch (adviceMode) {
+			/**
+			 * 两套事务的实现方式，一套是基于代理模式。
+			 * 注册Spring事务管理的Config类： {@link ProxyTransactionManagementConfiguration}
+			 *
+			 */
 			case PROXY:
-				return new String[] {AutoProxyRegistrar.class.getName(),
+				return new String[]{AutoProxyRegistrar.class.getName(),
 						ProxyTransactionManagementConfiguration.class.getName()};
+			/**
+			 * 另一套是基于Aspectj模式，实现代码参见：spring-aspects模块里面 :
+			 *  {@link org.springframework.transaction.aspectj.AbstractTransactionAspect}
+			 *  {@link org.springframework.transaction.aspectj.AnnotationTransactionAspect}
+			 */
 			case ASPECTJ:
-				return new String[] {determineTransactionAspectClass()};
+				return new String[]{determineTransactionAspectClass()};
 			default:
 				return null;
 		}

@@ -92,6 +92,7 @@ public abstract class AbstractTransactionAspectTests {
 	 */
 	@Test
 	public void transactionShouldSucceed() throws Exception {
+		// 使用的是默认的事务属性
 		TransactionAttribute txatt = new DefaultTransactionAttribute();
 		// 设置事务属性，因此会有事务环境执行
 		MapTransactionAttributeSource tas = new MapTransactionAttributeSource();

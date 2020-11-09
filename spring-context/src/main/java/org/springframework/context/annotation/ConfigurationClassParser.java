@@ -302,10 +302,11 @@ class ConfigurationClassParser {
 				}
 			}
 		}
-
+		// 获取注解声明上面的Import类，例如@EnableTransactionManagement的@Import(TransactionManagementConfigurationSelector.class)
+		Set<SourceClass> annotationImportClasses = getImports(sourceClass);
 		// 重点：处理@Import注解
 		// Process any @Import annotations
-		processImports(configClass, sourceClass, getImports(sourceClass), true);
+		processImports(configClass, sourceClass, annotationImportClasses, true);
 
 		// 重点：处理@ImportResource注解
 		// Process any @ImportResource annotations
@@ -515,6 +516,8 @@ class ConfigurationClassParser {
 	}
 
 	/**
+	 *  递归寻找Import.class
+	 *
 	 * Recursively collect all declared {@code @Import} values. Unlike most
 	 * meta-annotations it is valid to have several {@code @Import}s declared with
 	 * different values; the usual process of returning values from the first
@@ -535,6 +538,7 @@ class ConfigurationClassParser {
 			for (SourceClass annotation : sourceClass.getAnnotations()) {
 				String annName = annotation.getMetadata().getClassName();
 				if (!annName.startsWith("java") && !annName.equals(Import.class.getName())) {
+					// 进行递归：搜索Import class
 					collectImports(annotation, imports, visited);
 				}
 			}
@@ -544,12 +548,12 @@ class ConfigurationClassParser {
 
 
 	/**
-	 *   Imports处理注解：对于常见注解都在如下方法进行处理：
-	 * 		1：org.springframework.boot.autoconfigure.AutoConfigurationPackages$Registrar,
-	 * 		2：org.springframework.boot.autoconfigure.AutoConfigurationImportSelector,
-	 * 		3：org.springframework.context.annotation.AspectJAutoProxyRegistrar,
-	 * 		4：org.springframework.transaction.annotation.TransactionManagementConfigurationSelector,
-	 * 		5：org.springframework.data.jpa.repository.config.JpaRepositoriesRegistrar
+	 * Imports处理注解：对于常见注解都在如下方法进行处理：
+	 * 1：org.springframework.boot.autoconfigure.AutoConfigurationPackages$Registrar,
+	 * 2：org.springframework.boot.autoconfigure.AutoConfigurationImportSelector,
+	 * 3：org.springframework.context.annotation.AspectJAutoProxyRegistrar,
+	 * 4：org.springframework.transaction.annotation.TransactionManagementConfigurationSelector,
+	 * 5：org.springframework.data.jpa.repository.config.JpaRepositoriesRegistrar
 	 *
 	 * @param configClass
 	 * @param currentSourceClass
@@ -569,7 +573,7 @@ class ConfigurationClassParser {
 			this.importStack.push(configClass);
 			try {
 				for (SourceClass candidate : importCandidates) {
-					if (candidate.isAssignable(ImportSelector.class)) {
+					if (candidate.isAssignable(ImportSelector.class)) { //TODO 处理ImportSelector类
 						// Candidate class is an ImportSelector -> delegate to it to determine imports
 						Class<?> candidateClass = candidate.loadClass();
 						ImportSelector selector = BeanUtils.instantiateClass(candidateClass, ImportSelector.class);
@@ -583,7 +587,7 @@ class ConfigurationClassParser {
 							Collection<SourceClass> importSourceClasses = asSourceClasses(importClassNames);
 							processImports(configClass, currentSourceClass, importSourceClasses, false);
 						}
-					} else if (candidate.isAssignable(ImportBeanDefinitionRegistrar.class)) {
+					} else if (candidate.isAssignable(ImportBeanDefinitionRegistrar.class)) { //TODO 处理ImportBeanDefinitionRegistrar类
 						// Candidate class is an ImportBeanDefinitionRegistrar ->
 						// delegate to it to register additional bean definitions
 						Class<?> candidateClass = candidate.loadClass();

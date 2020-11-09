@@ -21,6 +21,8 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
+ * 用来处理@{@link Configuration} Class时候向 {@link BeanDefinitionRegistry} 注册Bean定义。
+ * <p>
  * Interface to be implemented by types that register additional bean definitions when
  * processing @{@link Configuration} classes. Useful when operating at the bean definition
  * level (as opposed to {@code @Bean} method/instance level) is desired or necessary.
@@ -42,10 +44,10 @@ import org.springframework.core.type.AnnotationMetadata;
  * <p>See implementations and associated unit tests for usage examples.
  *
  * @author Chris Beams
- * @since 3.1
  * @see Import
  * @see ImportSelector
  * @see Configuration
+ * @since 3.1
  */
 public interface ImportBeanDefinitionRegistrar {
 
@@ -55,8 +57,9 @@ public interface ImportBeanDefinitionRegistrar {
 	 * <p>Note that {@link BeanDefinitionRegistryPostProcessor} types may <em>not</em> be
 	 * registered here, due to lifecycle constraints related to {@code @Configuration}
 	 * class processing.
+	 *
 	 * @param importingClassMetadata annotation metadata of the importing class
-	 * @param registry current bean definition registry
+	 * @param registry               current bean definition registry
 	 */
 	public void registerBeanDefinitions(
 			AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry);

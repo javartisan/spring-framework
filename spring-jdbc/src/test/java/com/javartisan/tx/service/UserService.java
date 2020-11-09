@@ -1,8 +1,7 @@
 package com.javartisan.tx.service;
 
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -10,5 +9,10 @@ public class UserService {
 	@Transactional
 	public void echo() {
 		System.out.println(getClass());
+	}
+
+	@Transactional
+	public void echo(String name) {
+		System.out.println(getClass() + " " + name);
 	}
 }
