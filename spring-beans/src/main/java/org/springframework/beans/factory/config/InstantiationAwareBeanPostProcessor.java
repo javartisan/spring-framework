@@ -52,6 +52,8 @@ import org.springframework.lang.Nullable;
 public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 
 	/**
+	 * 实例化之前调用
+	 * <p>
 	 * Apply this BeanPostProcessor <i>before the target bean gets instantiated</i>.
 	 * The returned bean object may be a proxy to use instead of the target bean,
 	 * effectively suppressing default instantiation of the target bean.
@@ -76,10 +78,13 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 */
 	@Nullable
 	default Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+		//实例化之前调用
 		return null;
 	}
 
 	/**
+	 * 在spring自动注入成员变量之前进行一些自定义操作
+	 * <p>
 	 * Perform operations after the bean has been instantiated, via a constructor or factory method,
 	 * but before Spring property population (from explicit properties or autowiring) occurs.
 	 * <p>This is the ideal callback for performing custom field injection on the given bean
@@ -90,12 +95,17 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 	 * @param beanName the name of the bean
 	 * @return {@code true} if properties should be set on the bean; {@code false}
 	 * if property population should be skipped. Normal implementations should return {@code true}.
+	 * <p>
 	 * Returning {@code false} will also prevent any subsequent InstantiationAwareBeanPostProcessor
 	 * instances being invoked on this bean instance.
+	 * 返回False的话则会阻止后续的其他InstantiationAwareBeanPostProcessor 执行。除此之外，该Bean的其他属性值将不会进行设置。
+	 * 参见单元测试：{@link org.springframework.beans.factory.DefaultListableBeanFactoryTests#testFieldSettingWithInstantiationAwarePostProcessorNoShortCircuit()}
+	 * <p>
 	 * @throws org.springframework.beans.BeansException in case of errors
 	 * @see #postProcessBeforeInstantiation
 	 */
 	default boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
+
 		return true;
 	}
 
