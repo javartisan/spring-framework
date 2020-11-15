@@ -57,17 +57,7 @@ import org.springframework.beans.PropertyEditorRegistry;
 import org.springframework.beans.PropertyValue;
 import org.springframework.beans.TypeConverter;
 import org.springframework.beans.TypeMismatchException;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanExpressionContext;
-import org.springframework.beans.factory.config.BeanExpressionResolver;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.beans.factory.config.ConstructorArgumentValues;
-import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.beans.factory.config.RuntimeBeanReference;
-import org.springframework.beans.factory.config.TypedStringValue;
+import org.springframework.beans.factory.config.*;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -583,8 +573,7 @@ public class DefaultListableBeanFactoryTests {
 
 			lbf.getBean("kerry");
 			fail("Unresolved reference should have been detected");
-		}
-		catch (BeansException ex) {
+		} catch (BeansException ex) {
 			// cool
 		}
 	}
@@ -612,8 +601,7 @@ public class DefaultListableBeanFactoryTests {
 			lbf.registerBeanDefinition("tb", bd);
 			lbf.getBean("tb");
 			fail("Should throw exception on invalid property");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			assertTrue(ex.getCause() instanceof NotWritablePropertyException);
 			NotWritablePropertyException cause = (NotWritablePropertyException) ex.getCause();
 			// expected
@@ -674,8 +662,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean("kerry");
 			fail("Should have thrown BeanCreationException");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			// expected
 			assertTrue(ex.contains(BeanCurrentlyInCreationException.class));
 		}
@@ -772,8 +759,7 @@ public class DefaultListableBeanFactoryTests {
 		(new PropertiesBeanDefinitionReader(lbf)).registerBeanDefinitions(p);
 		try {
 			(new PropertiesBeanDefinitionReader(lbf)).registerBeanDefinitions(p);
-		}
-		catch (BeanDefinitionStoreException ex) {
+		} catch (BeanDefinitionStoreException ex) {
 			assertEquals("kerry", ex.getBeanName());
 			// expected
 		}
@@ -800,16 +786,14 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.registerAlias("test3", "test2");
 			fail("Should have thrown IllegalStateException");
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			// expected
 		}
 
 		try {
 			lbf.registerAlias("test3", "test");
 			fail("Should have thrown IllegalStateException");
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			// expected
 		}
 
@@ -852,8 +836,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.registerBeanDefinition("test", newDef);
 			fail("Should have thrown BeanDefinitionOverrideException");
-		}
-		catch (BeanDefinitionOverrideException ex) {
+		} catch (BeanDefinitionOverrideException ex) {
 			assertEquals("test", ex.getBeanName());
 			assertSame(newDef, ex.getBeanDefinition());
 			assertSame(oldDef, ex.getExistingDefinition());
@@ -940,8 +923,7 @@ public class DefaultListableBeanFactoryTests {
 				try {
 					NumberFormat nf = NumberFormat.getInstance(Locale.GERMAN);
 					return nf.parse(source).floatValue();
-				}
-				catch (ParseException ex) {
+				} catch (ParseException ex) {
 					throw new IllegalArgumentException(ex);
 				}
 			}
@@ -1068,7 +1050,7 @@ public class DefaultListableBeanFactoryTests {
 		assertEquals(singletonObject, lbf.getBean("singletonObject"));
 		assertEquals(singletonObject, test.getSpouse());
 
-		Map<?, ?>  beansOfType = lbf.getBeansOfType(TestBean.class, false, true);
+		Map<?, ?> beansOfType = lbf.getBeansOfType(TestBean.class, false, true);
 		assertEquals(2, beansOfType.size());
 		assertTrue(beansOfType.containsValue(test));
 		assertTrue(beansOfType.containsValue(singletonObject));
@@ -1118,8 +1100,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.registerSingleton("singletonObject", singletonObject);
 			fail("Should have thrown IllegalStateException");
-		}
-		catch (IllegalStateException ex) {
+		} catch (IllegalStateException ex) {
 			// expected
 		}
 	}
@@ -1296,8 +1277,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(ConstructorDependency.class, AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR, false);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 			assertTrue(ex.getMessage().contains("rod"));
 			assertTrue(ex.getMessage().contains("rod2"));
@@ -1316,8 +1296,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(UnsatisfiedConstructorDependency.class, AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR, true);
 			fail("Should have unsatisfied constructor dependency on SideEffectBean");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 		}
 	}
@@ -1354,8 +1333,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(DependenciesBean.class, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 		}
 	}
@@ -1382,8 +1360,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.preInstantiateSingletons();
 			fail("Should have thrown BeanCreationException");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			// expected
 			assertTrue(ex.getMessage().contains("Circular"));
 			assertTrue(ex.getMessage().contains("'tb2'"));
@@ -1406,8 +1383,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.preInstantiateSingletons();
 			fail("Should have thrown BeanCreationException");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			// expected
 			assertTrue(ex.getMessage().contains("Circular"));
 			assertTrue(ex.getMessage().contains("'tb3'"));
@@ -1557,8 +1533,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean(TestBean.class);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 	}
@@ -1570,15 +1545,13 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean(ConstructorDependency.class);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			lbf.getBean(ConstructorDependency.class, 42);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 
@@ -1586,15 +1559,13 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			provider.getObject();
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			provider.getObject(42);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 		assertNull(provider.getIfAvailable());
@@ -1643,15 +1614,13 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean(ConstructorDependency.class);
 			fail("Should have thrown NoUniqueBeanDefinitionException");
-		}
-		catch (NoUniqueBeanDefinitionException ex) {
+		} catch (NoUniqueBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			lbf.getBean(ConstructorDependency.class, 42);
 			fail("Should have thrown NoUniqueBeanDefinitionException");
-		}
-		catch (NoUniqueBeanDefinitionException ex) {
+		} catch (NoUniqueBeanDefinitionException ex) {
 			// expected
 		}
 
@@ -1659,22 +1628,19 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			provider.getObject();
 			fail("Should have thrown NoUniqueBeanDefinitionException");
-		}
-		catch (NoUniqueBeanDefinitionException ex) {
+		} catch (NoUniqueBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			provider.getObject(42);
 			fail("Should have thrown NoUniqueBeanDefinitionException");
-		}
-		catch (NoUniqueBeanDefinitionException ex) {
+		} catch (NoUniqueBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			provider.getIfAvailable();
 			fail("Should have thrown NoUniqueBeanDefinitionException");
-		}
-		catch (NoUniqueBeanDefinitionException ex) {
+		} catch (NoUniqueBeanDefinitionException ex) {
 			// expected
 		}
 		assertNull(provider.getIfUnique());
@@ -1781,8 +1747,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean(TestBean.class, 67);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 	}
@@ -1797,15 +1762,13 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			deserialized.getObject();
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 		try {
 			deserialized.getObject(42);
 			fail("Should have thrown NoSuchBeanDefinitionException");
-		}
-		catch (NoSuchBeanDefinitionException ex) {
+		} catch (NoSuchBeanDefinitionException ex) {
 			// expected
 		}
 		assertNull(deserialized.getIfAvailable());
@@ -1950,8 +1913,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(DependenciesBean.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 			assertTrue(ex.getMessage().contains("test"));
 			assertTrue(ex.getMessage().contains("spouse"));
@@ -1964,8 +1926,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(DependenciesBean.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 		}
 	}
@@ -2005,8 +1966,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(DependenciesBean.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 			assertNotNull("Exception should have cause", ex.getCause());
 			assertEquals("Wrong cause type", NoUniqueBeanDefinitionException.class, ex.getCause().getClass());
@@ -2039,8 +1999,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowire(DependenciesBean.class, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 			assertNotNull("Exception should have cause", ex.getCause());
 			assertEquals("Wrong cause type", NoUniqueBeanDefinitionException.class, ex.getCause().getClass());
@@ -2084,8 +2043,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowireBeanProperties(existingBean, AutowireCapableBeanFactory.AUTOWIRE_BY_NAME, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException ex) {
+		} catch (UnsatisfiedDependencyException ex) {
 			// expected
 		}
 	}
@@ -2118,8 +2076,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowireBeanProperties(existingBean, AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE, true);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException expected) {
+		} catch (UnsatisfiedDependencyException expected) {
 		}
 	}
 
@@ -2137,8 +2094,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.autowireBeanProperties(new TestBean(), AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR, false);
 			fail("Should have thrown IllegalArgumentException");
-		}
-		catch (IllegalArgumentException expected) {
+		} catch (IllegalArgumentException expected) {
 		}
 	}
 
@@ -2249,8 +2205,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.preInstantiateSingletons();
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException expected) {
+		} catch (UnsatisfiedDependencyException expected) {
 		}
 	}
 
@@ -2263,8 +2218,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.preInstantiateSingletons();
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException expected) {
+		} catch (UnsatisfiedDependencyException expected) {
 		}
 	}
 
@@ -2277,8 +2231,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBeansOfType(String.class);
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException expected) {
+		} catch (UnsatisfiedDependencyException expected) {
 		}
 	}
 
@@ -2312,8 +2265,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.preInstantiateSingletons();
 			fail("Should have thrown UnsatisfiedDependencyException");
-		}
-		catch (UnsatisfiedDependencyException expected) {
+		} catch (UnsatisfiedDependencyException expected) {
 			assertTrue(expected.toString().contains("java.lang.Strin"));
 		}
 	}
@@ -2325,8 +2277,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean("test");
 			fail("Should have thrown BeanCreationException");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			assertEquals("test", ex.getBeanName());
 			assertTrue(ex.getMessage().toLowerCase().contains("interface"));
 		}
@@ -2339,8 +2290,7 @@ public class DefaultListableBeanFactoryTests {
 		try {
 			lbf.getBean("test");
 			fail("Should have thrown BeanCreationException");
-		}
-		catch (BeanCreationException ex) {
+		} catch (BeanCreationException ex) {
 			assertEquals("test", ex.getBeanName());
 			assertTrue(ex.getMessage().toLowerCase().contains("abstract"));
 		}
@@ -2609,6 +2559,7 @@ public class DefaultListableBeanFactoryTests {
 			public Object postProcessBeforeInitialization(Object bean, String beanName) {
 				return new TestBean();
 			}
+
 			@Override
 			public Object postProcessAfterInitialization(Object bean, String beanName) {
 				return bean;
@@ -2630,6 +2581,7 @@ public class DefaultListableBeanFactoryTests {
 			public Object postProcessBeforeInitialization(Object bean, String beanName) {
 				return new TestBean();
 			}
+
 			@Override
 			public Object postProcessAfterInitialization(Object bean, String beanName) {
 				return bean;
@@ -2652,6 +2604,7 @@ public class DefaultListableBeanFactoryTests {
 			public Object postProcessBeforeInitialization(Object bean, String beanName) {
 				return new TestBean();
 			}
+
 			@Override
 			public Object postProcessAfterInitialization(Object bean, String beanName) {
 				return bean;
@@ -2706,10 +2659,10 @@ public class DefaultListableBeanFactoryTests {
 
 	/**
 	 * @param singleton whether the bean created from the factory method on
-	 * the bean instance should be a singleton or prototype. This flag is
-	 * used to allow checking of the new ability in 1.2.4 to determine the type
-	 * of a prototype created from invoking a factory method on a bean instance
-	 * in the factory.
+	 *                  the bean instance should be a singleton or prototype. This flag is
+	 *                  used to allow checking of the new ability in 1.2.4 to determine the type
+	 *                  of a prototype created from invoking a factory method on a bean instance
+	 *                  in the factory.
 	 */
 	private void findTypeOfPrototypeFactoryMethodOnBeanInstance(boolean singleton) {
 		String expectedNameFromProperties = "tony";
@@ -2759,8 +2712,7 @@ public class DefaultListableBeanFactoryTests {
 		TestBean second = (TestBean) lbf.getBean("fmWithProperties");
 		if (singleton) {
 			assertSame(tb, second);
-		}
-		else {
+		} else {
 			assertNotSame(tb, second);
 		}
 		assertEquals(expectedNameFromProperties, tb.getName());
@@ -2769,8 +2721,7 @@ public class DefaultListableBeanFactoryTests {
 		second = (TestBean) lbf.getBean("fmGeneric");
 		if (singleton) {
 			assertSame(tb, second);
-		}
-		else {
+		} else {
 			assertNotSame(tb, second);
 		}
 		assertEquals(expectedNameFromProperties, tb.getName());
@@ -2779,8 +2730,7 @@ public class DefaultListableBeanFactoryTests {
 		second = (TestBean) lbf.getBean("fmWithArgs");
 		if (singleton) {
 			assertSame(tb2, second);
-		}
-		else {
+		} else {
 			assertNotSame(tb2, second);
 		}
 		assertEquals(expectedNameFromArgs, tb2.getName());
@@ -2832,11 +2782,19 @@ public class DefaultListableBeanFactoryTests {
 		assertEquals("Child 'scope' not inherited", "bonanza!", def.getScope());
 	}
 
+	/**
+	 * {@link InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation(java.lang.Object, java.lang.String)}
+	 * <p>
+	 * Short Circuit :短路的意思
+	 */
 	@Test
 	public void testFieldSettingWithInstantiationAwarePostProcessorNoShortCircuit() {
 		doTestFieldSettingWithInstantiationAwarePostProcessor(false);
 	}
 
+	/**
+	 * Short Circuit :短路的意思
+	 */
 	@Test
 	public void testFieldSettingWithInstantiationAwarePostProcessorWithShortCircuit() {
 		doTestFieldSettingWithInstantiationAwarePostProcessor(true);
@@ -2858,8 +2816,7 @@ public class DefaultListableBeanFactoryTests {
 					f.setAccessible(true);
 					f.set(tb, nameSetOnField);
 					return !skipPropertyPopulation;
-				}
-				catch (Exception ex) {
+				} catch (Exception ex) {
 					fail("Unexpected exception: " + ex);
 					// Keep compiler happy about return
 					throw new IllegalStateException();
@@ -2871,8 +2828,7 @@ public class DefaultListableBeanFactoryTests {
 		assertEquals("Name was set on field by IAPP", nameSetOnField, tb.getName());
 		if (!skipPropertyPopulation) {
 			assertEquals("Property value still set", ageSetByPropertyValue, tb.getAge());
-		}
-		else {
+		} else {
 			assertEquals("Property value was NOT set and still has default value", 0, tb.getAge());
 		}
 	}
@@ -3009,9 +2965,11 @@ public class DefaultListableBeanFactoryTests {
 	}
 
 
-	static class A { }
+	static class A {
+	}
 
-	static class B { }
+	static class B {
+	}
 
 
 	public static class NoDependencies {
@@ -3361,15 +3319,12 @@ public class DefaultListableBeanFactoryTests {
 			if (value instanceof String && Float.class.isAssignableFrom(requiredType)) {
 				try {
 					return new Float(this.numberFormat.parse((String) value).floatValue());
-				}
-				catch (ParseException ex) {
+				} catch (ParseException ex) {
 					throw new TypeMismatchException(value, requiredType, ex);
 				}
-			}
-			else if (value instanceof String && int.class.isAssignableFrom(requiredType)) {
+			} else if (value instanceof String && int.class.isAssignableFrom(requiredType)) {
 				return new Integer(5);
-			}
-			else {
+			} else {
 				return value;
 			}
 		}
@@ -3438,7 +3393,7 @@ public class DefaultListableBeanFactoryTests {
 			if (principals == null) {
 				return;
 			}
-			for (Iterator<Principal> it = principals.iterator(); it.hasNext();) {
+			for (Iterator<Principal> it = principals.iterator(); it.hasNext(); ) {
 				Principal p = it.next();
 				this.userName = p.getName();
 				return;

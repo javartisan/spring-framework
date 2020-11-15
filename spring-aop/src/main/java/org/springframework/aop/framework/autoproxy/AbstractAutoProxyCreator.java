@@ -149,7 +149,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	private final Set<Object> earlyProxyReferences = Collections.newSetFromMap(new ConcurrentHashMap<>(16));
 
 	private final Map<Object, Class<?>> proxyTypes = new ConcurrentHashMap<>(16);
-
+	/**
+	 * 用于记录那些Bean不需要进行代理，例如Aspect类是增强类就无须代理。
+	 */
 	private final Map<Object, Boolean> advisedBeans = new ConcurrentHashMap<>(256);
 
 
@@ -257,6 +259,13 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		return wrapIfNecessary(bean, beanName, cacheKey);
 	}
 
+	/**
+	 * 定义：{@link org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation(java.lang.Class, java.lang.String)} 在对象实例化之前调用。
+	 *
+	 * @param beanClass the class of the bean to be instantiated
+	 * @param beanName  the name of the bean
+	 * @return
+	 */
 	@Override
 	public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) {
 		Object cacheKey = getCacheKey(beanClass, beanName);

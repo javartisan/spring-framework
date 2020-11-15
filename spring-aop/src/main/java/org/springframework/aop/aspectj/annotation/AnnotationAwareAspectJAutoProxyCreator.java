@@ -104,6 +104,13 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 		return advisors;
 	}
 
+	/**
+	 * Return whether the given bean class represents an infrastructure class that should never be proxied.
+	 * The default implementation considers Advices, Advisors and AopInfrastructureBeans as infrastructure classes.
+	 *
+	 * @param beanClass the class of the bean
+	 * @return
+	 */
 	@Override
 	protected boolean isInfrastructureClass(Class<?> beanClass) {
 		// Previously we setProxyTargetClass(true) in the constructor, but that has too
